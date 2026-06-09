@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+
+  <meta name="description" content="Biovagon builds bioinformatics tools, runs workshops, and offers 1:1 mentorship for life sciences students and researchers. Based in Chennai." />
+  <meta property="og:title" content="Biovagon — Life Sciences, But Louder" />
+  <meta property="og:description" content="Biovagon builds bioinformatics tools, runs workshops, and offers 1:1 mentorship for life sciences students and researchers. Based in Chennai." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biovagon" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Biovagon — Life Sciences, But Louder" />
+  <meta name="twitter:description" content="Biovagon builds bioinformatics tools, runs workshops, and offers 1:1 mentorship for life sciences students and researchers. Based in Chennai." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIOVAGON // life sciences, but louder</title>
+<link rel="stylesheet" href="shared.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Bowlby+One&display=swap" rel="stylesheet" />
+<script src="image-slot.js"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --void: #0a0a0f;
+    --void-2: #12121a;
+    --void-3: #1a1a26;
+    --acid: #b9ff00;
+    --acid-glow: #d4ff4a;
+    --magenta: #ff00aa;
+    --magenta-glow: #ff4dc4;
+    --electric: #00d4ff;
+    --electric-glow: #4de8ff;
+    --bone: #f0f0f5;
+    --grey: #5a5a6e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--bone);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.4;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    cursor: default;
+  }
+
+  /* ─── CRT SCANLINES ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    z-index: 999;
+    mix-blend-mode: overlay;
+  }
+
+  /* ─── NOISE ─── */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 998;
+    mix-blend-mode: screen;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+  .display { font-family: 'Bowlby One', sans-serif; }
+
+  /* ─── CURSOR FOLLOWER ─── */
+  .cursor-glow {
+    position: fixed;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(185, 255, 0, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+  body:hover .cursor-glow { opacity: 1; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 16px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(185, 255, 0, 0.15);
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px;
+    color: var(--bone);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.2s;
+  }
+  .logo::before {
+    content: 'BIOVAGON';
+    position: absolute; left: 0; top: 0;
+    color: var(--magenta);
+    z-index: -1;
+    transform: translate(2px, 0);
+    opacity: 0.7;
+  }
+  .logo::after {
+    content: 'BIOVAGON';
+    position: absolute; left: 0; top: 0;
+    color: var(--electric);
+    z-index: -2;
+    transform: translate(-2px, 0);
+    opacity: 0.7;
+  }
+  .nav-links {
+    display: flex; gap: 24px; align-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .nav-links a {
+    color: var(--bone);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.2s;
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a:hover {
+    opacity: 1;
+    color: var(--acid);
+    text-shadow: 0 0 12px rgba(185, 255, 0, 0.6);
+  }
+  .nav-links a.active {
+    opacity: 1;
+    color: var(--acid);
+  }
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    height: 1px;
+    background: var(--acid);
+    box-shadow: 0 0 8px var(--acid);
+  }
+  .nav-cta {
+    background: var(--acid);
+    color: var(--void) !important;
+    padding: 8px 16px;
+    border-radius: 0;
+    font-weight: 700;
+    border: 1px solid var(--acid);
+    box-shadow: 4px 4px 0 var(--magenta);
+    transition: all 0.15s;
+    opacity: 1 !important;
+  }
+  .nav-cta:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--magenta);
+    text-shadow: none !important;
+  }
+
+  /* ─── NAV DROPDOWN ─── */
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px); left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: rgba(10,10,15,0.97);
+    border: 1px solid rgba(185,255,0,0.2);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.7), 0 0 20px rgba(185,255,0,0.06);
+    min-width: 170px;
+    display: flex; flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.18s, transform 0.18s;
+    z-index: 200;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+  .nav-dropdown-menu::before {
+    content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 5px solid transparent; border-right: 5px solid transparent;
+    border-bottom: 5px solid rgba(185,255,0,0.3);
+  }
+  .nav-dropdown-menu a {
+    padding: 10px 16px;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--bone); opacity: 0.65;
+    transition: all 0.15s;
+    border-bottom: 1px solid rgba(185,255,0,0.07);
+    white-space: nowrap; text-decoration: none; display: block;
+  }
+  .nav-dropdown-menu a:last-child { border-bottom: none; }
+  .nav-dropdown-menu a:hover { opacity: 1; color: var(--acid); background: rgba(185,255,0,0.05); text-shadow: 0 0 10px rgba(185,255,0,0.5); }
+
+  .menu-btn {
+    display: none;
+    background: var(--acid);
+    color: var(--void);
+    border: none;
+    padding: 8px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    padding: 120px 24px 60px;
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+
+  /* gradient mesh blob */
+  .mesh-blob {
+    position: absolute;
+    width: 700px; height: 700px;
+    top: 50%; right: -150px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: 
+      radial-gradient(circle at 30% 30%, var(--magenta) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, var(--electric) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, var(--acid) 0%, transparent 60%);
+    filter: blur(60px);
+    opacity: 0.7;
+    animation: meshSpin 20s linear infinite, meshPulse 8s ease-in-out infinite;
+    z-index: 0;
+  }
+  @keyframes meshSpin {
+    from { transform: translateY(-50%) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg); }
+  }
+  @keyframes meshPulse {
+    0%, 100% { filter: blur(60px); opacity: 0.7; }
+    50% { filter: blur(80px); opacity: 0.85; }
+  }
+
+  /* secondary blob */
+  .mesh-blob-2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    bottom: -100px; left: -100px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 60% 40%, var(--electric) 0%, transparent 60%),
+      radial-gradient(circle at 40% 70%, var(--acid) 0%, transparent 50%);
+    filter: blur(70px);
+    opacity: 0.5;
+    animation: meshSpin 30s linear infinite reverse;
+    z-index: 0;
+  }
+
+  .hero-inner {
+    max-width: 1280px; margin: 0 auto; width: 100%;
+    position: relative; z-index: 2;
+  }
+
+  /* ticker bar at top of hero */
+  .status-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px;
+    border: 1px solid var(--acid);
+    background: rgba(185, 255, 0, 0.05);
+    margin-bottom: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .status-bar .dot {
+    width: 8px; height: 8px;
+    background: var(--acid);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--acid);
+    animation: blink 1.2s ease-in-out infinite;
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* MEGA HEADLINE */
+  .hero h1 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(56px, 14vw, 220px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    position: relative;
+    color: var(--bone);
+  }
+
+  /* glitch effect on headline */
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+  .glitch::before {
+    color: var(--magenta);
+    z-index: -1;
+    animation: glitchAnim 4s infinite;
+    mix-blend-mode: screen;
+  }
+  .glitch::after {
+    color: var(--electric);
+    z-index: -2;
+    animation: glitchAnim 4s infinite reverse;
+    mix-blend-mode: screen;
+  }
+  @keyframes glitchAnim {
+    0%, 90%, 100% { transform: translate(0, 0); }
+    92% { transform: translate(-3px, 0); }
+    94% { transform: translate(3px, 0); }
+    96% { transform: translate(-2px, 0); }
+  }
+
+  /* outline word */
+  .outline {
+    -webkit-text-stroke: 2px var(--bone);
+    color: transparent;
+    transition: all 0.3s;
+  }
+  .outline:hover {
+    -webkit-text-stroke: 2px var(--acid);
+    color: var(--acid);
+    text-shadow: 0 0 30px rgba(185, 255, 0, 0.5);
+  }
+
+  /* highlighted word */
+  .highlight {
+    color: var(--acid);
+    text-shadow: 0 0 30px rgba(185, 255, 0, 0.6);
+    position: relative;
+  }
+  .highlight-mag {
+    color: var(--magenta);
+    text-shadow: 0 0 30px rgba(255, 0, 170, 0.6);
+  }
+
+  /* DNA DECODER (signature moment) */
+  .decoder {
+    display: inline-block;
+    background: var(--void-2);
+    border: 1px solid var(--acid);
+    padding: 4px 16px;
+    font-family: 'Bowlby One', sans-serif;
+    color: var(--acid);
+    text-shadow: 0 0 20px rgba(185, 255, 0, 0.7);
+    box-shadow: 0 0 40px rgba(185, 255, 0, 0.3), inset 0 0 20px rgba(185, 255, 0, 0.1);
+    cursor: pointer;
+  }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-top: 40px;
+  }
+  .hero-bottom p {
+    font-size: 18px;
+    color: rgba(240, 240, 245, 0.7);
+    max-width: 500px;
+    line-height: 1.5;
+  }
+  .hero-bottom p strong {
+    color: var(--acid);
+    font-weight: 500;
+    text-shadow: 0 0 12px rgba(185, 255, 0, 0.4);
+  }
+
+  /* sequence terminal */
+  .sequence-term {
+    background: var(--void-2);
+    border: 1px solid rgba(185, 255, 0, 0.3);
+    padding: 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--acid);
+    box-shadow: 0 0 40px rgba(185, 255, 0, 0.1), inset 0 0 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .sequence-term .term-header {
+    display: flex; justify-content: space-between;
+    color: var(--grey);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(185, 255, 0, 0.15);
+  }
+  .sequence-term .term-line {
+    word-break: break-all;
+    margin-bottom: 4px;
+  }
+  .nuc-A { color: var(--acid); }
+  .nuc-T { color: var(--magenta); }
+  .nuc-G { color: var(--electric); }
+  .nuc-C { color: var(--bone); }
+
+  /* CTA buttons */
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
+
+  .btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 16px 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: 1px solid currentColor;
+    background: transparent;
+    color: var(--bone);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .btn:hover {
+    background: var(--bone);
+    color: var(--void);
+    box-shadow: 0 0 30px rgba(240, 240, 245, 0.4);
+  }
+  .btn-acid {
+    background: var(--acid);
+    color: var(--void);
+    border-color: var(--acid);
+    box-shadow: 4px 4px 0 var(--magenta);
+  }
+  .btn-acid:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--magenta);
+    background: var(--acid);
+    color: var(--void);
+  }
+  .btn-mag {
+    background: var(--magenta);
+    color: var(--bone);
+    border-color: var(--magenta);
+    box-shadow: 4px 4px 0 var(--electric);
+  }
+  .btn-mag:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--electric);
+    background: var(--magenta);
+    color: var(--bone);
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee {
+    overflow: hidden;
+    background: var(--acid);
+    color: var(--void);
+    padding: 14px 0;
+    border-top: 2px solid var(--acid);
+    border-bottom: 2px solid var(--acid);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 40px rgba(185, 255, 0, 0.4);
+  }
+  .marquee-track {
+    display: flex; gap: 50px;
+    white-space: nowrap;
+    animation: scroll 25s linear infinite;
+    width: max-content;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .marquee-track span { display: flex; align-items: center; gap: 50px; }
+  .marquee-track span::after {
+    content: '◢';
+    color: var(--magenta);
+    font-size: 16px;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 100px 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .container { max-width: 1280px; margin: 0 auto; position: relative; }
+
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    margin-bottom: 30px;
+    padding: 6px 14px;
+    border: 1px solid var(--acid);
+    background: rgba(185, 255, 0, 0.05);
+  }
+  .section-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--acid);
+    box-shadow: 0 0 8px var(--acid);
+    animation: blink 1.2s infinite;
+  }
+
+  /* ─── MISSION/VISION SECTION ─── */
+  #mv {
+    background: linear-gradient(180deg, var(--void) 0%, var(--void-2) 100%);
+    border-top: 1px solid rgba(185, 255, 0, 0.15);
+    border-bottom: 1px solid rgba(185, 255, 0, 0.15);
+  }
+  .mv-h {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(40px, 6vw, 90px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+    max-width: 1000px;
+  }
+
+  .mv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .mv-card {
+    background: var(--void-3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 40px 36px;
+    position: relative;
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+  .mv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--acid), transparent);
+    transition: left 0.6s;
+  }
+  .mv-card:hover::before { left: 100%; }
+  .mv-card:hover {
+    border-color: var(--acid);
+    box-shadow: 0 0 40px rgba(185, 255, 0, 0.2);
+    transform: translateY(-4px);
+  }
+  .mv-card.mag:hover {
+    border-color: var(--magenta);
+    box-shadow: 0 0 40px rgba(255, 0, 170, 0.25);
+  }
+  .mv-card.mag::before {
+    background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+  }
+
+  .mv-num {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 80px;
+    line-height: 0.8;
+    color: var(--acid);
+    text-shadow: 0 0 30px rgba(185, 255, 0, 0.5);
+    margin-bottom: 14px;
+    -webkit-text-stroke: 1px var(--acid);
+  }
+  .mv-card.mag .mv-num {
+    color: var(--magenta);
+    text-shadow: 0 0 30px rgba(255, 0, 170, 0.5);
+    -webkit-text-stroke: 1px var(--magenta);
+  }
+  .mv-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    margin-bottom: 16px;
+  }
+  .mv-card h3 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 32px;
+    margin-bottom: 14px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--bone);
+  }
+  .mv-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(240, 240, 245, 0.7);
+  }
+
+  /* ─── QUOTE / RAVE ─── */
+  #quote {
+    background: var(--void);
+    padding: 140px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  #quote::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--magenta) 0%, transparent 70%);
+    opacity: 0.15;
+    filter: blur(80px);
+    animation: pulse-bg 4s ease-in-out infinite;
+  }
+  @keyframes pulse-bg {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.15; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.25; }
+  }
+  #quote .container { max-width: 1100px; position: relative; z-index: 2; }
+
+  .quote-text {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(28px, 5vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+  }
+  .quote-text .hl-acid {
+    color: var(--acid);
+    text-shadow: 0 0 30px rgba(185, 255, 0, 0.5);
+  }
+  .quote-text .hl-mag {
+    color: var(--magenta);
+    text-shadow: 0 0 30px rgba(255, 0, 170, 0.5);
+  }
+  .quote-text .hl-elec {
+    color: var(--electric);
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+  }
+  .quote-inner {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 80px;
+    align-items: center;
+    text-align: left;
+  }
+  .quote-portrait-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .quote-portrait {
+    width: 320px;
+    height: 380px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid var(--magenta);
+    box-shadow: 0 0 60px rgba(255, 0, 170, 0.5), 0 0 120px rgba(255, 0, 170, 0.2);
+  }
+  .quote-right {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .quote-attr-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .quote-attr {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+  }
+  .quote-attr::before { content: '◢ '; }
+  .quote-attr::after { content: ' ◣'; }
+  @media (max-width: 900px) {
+    .quote-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .quote-portrait { width: 180px; height: 220px; border-radius: 14px; margin: 0 auto; }
+    .quote-attr-wrap { justify-content: center; }
+  }
+
+  /* ─── EXPLORE TILES ─── */
+  #explore {
+    padding: 120px 24px;
+  }
+  .explore-h {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(40px, 6vw, 90px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+  }
+  .explore-h em {
+    color: var(--acid);
+    font-style: normal;
+    text-shadow: 0 0 30px rgba(185, 255, 0, 0.4);
+  }
+
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(185, 255, 0, 0.15);
+    border: 1px solid rgba(185, 255, 0, 0.15);
+  }
+  .tile {
+    background: var(--void-2);
+    padding: 36px 28px;
+    text-decoration: none;
+    color: var(--bone);
+    transition: all 0.3s;
+    display: flex; flex-direction: column;
+    min-height: 280px;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .tile:hover {
+    background: var(--void-3);
+  }
+  .tile::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--acid);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    box-shadow: 0 0 12px var(--acid);
+  }
+  .tile:hover::after { transform: scaleX(1); }
+  .tile.mag::after { background: var(--magenta); box-shadow: 0 0 12px var(--magenta); }
+  .tile.elec::after { background: var(--electric); box-shadow: 0 0 12px var(--electric); }
+
+  .tile-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    margin-bottom: 30px;
+  }
+  .tile h3 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 32px;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+  .tile:hover h3 { color: var(--acid); }
+  .tile.mag:hover h3 { color: var(--magenta); }
+  .tile.elec:hover h3 { color: var(--electric); }
+  .tile p {
+    font-size: 13px;
+    color: rgba(240, 240, 245, 0.6);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .tile-arrow {
+    align-self: flex-start;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--bone);
+    transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .tile:hover .tile-arrow {
+    color: var(--acid);
+    gap: 14px;
+  }
+  .tile.mag:hover .tile-arrow { color: var(--magenta); }
+  .tile.elec:hover .tile-arrow { color: var(--electric); }
+
+  /* ─── UDYAM ─── */
+  #udyam {
+    background: var(--void-2);
+    padding: 80px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(185, 255, 0, 0.15);
+    border-bottom: 1px solid rgba(185, 255, 0, 0.15);
+  }
+  .udyam-card {
+    display: inline-block;
+    background: var(--void);
+    border: 1px solid var(--acid);
+    padding: 28px 50px;
+    box-shadow: 0 0 60px rgba(185, 255, 0, 0.15), inset 0 0 30px rgba(185, 255, 0, 0.05);
+    position: relative;
+  }
+  .udyam-card::before, .udyam-card::after {
+    content: '';
+    position: absolute;
+    width: 16px; height: 16px;
+    border: 2px solid var(--acid);
+  }
+  .udyam-card::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  .udyam-card::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  .udyam-flag {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 14px;
+    color: var(--magenta);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .udyam-id {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(24px, 3vw, 38px);
+    color: var(--acid);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(185, 255, 0, 0.5);
+    margin-bottom: 4px;
+  }
+  .udyam-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--void);
+    padding: 80px 24px 30px;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(185, 255, 0, 0.15);
+  }
+  .footer-mega {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(60px, 10vw, 160px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-align: center;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, var(--bone) 0%, transparent 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+  }
+  .footer-mega::before {
+    content: 'BIOVAGON';
+    position: absolute; left: 0; top: 0;
+    width: 100%;
+    color: var(--magenta);
+    -webkit-text-fill-color: var(--magenta);
+    z-index: -1;
+    transform: translate(4px, 0);
+    opacity: 0.3;
+  }
+  .footer-tagline {
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    margin-bottom: 60px;
+  }
+  .footer-tagline span { color: var(--acid); }
+  .footer-bottom {
+    max-width: 1280px; margin: 0 auto;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+  }
+  .footer-bottom a {
+    color: var(--bone);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+  .footer-bottom a:hover {
+    opacity: 1;
+    color: var(--acid);
+    text-shadow: 0 0 8px var(--acid);
+  }
+  .footer-bottom .links { display: flex; gap: 24px; flex-wrap: wrap; }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 12px 16px; }
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--void);
+      padding: 22px;
+      border-bottom: 1px solid var(--acid);
+      gap: 14px;
+    }
+    .menu-btn { display: block; }
+
+    section { padding: 70px 18px; }
+    #home { padding: 100px 18px 60px; }
+    .hero-bottom, .mv-grid { grid-template-columns: 1fr; gap: 36px; }
+    .tile-grid { grid-template-columns: 1fr; }
+    .mesh-blob { width: 500px; height: 500px; right: -200px; }
+  }
+
+  /* ─── HEADLINE CYCLE TRANSITION ─── */
+  #hl-top {
+    display: inline-block;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  #hl-top.fade-out { opacity: 0; transform: translateY(-8px); }
+  #hl-top.fade-in  { opacity: 1; transform: translateY(0); }
+  .decoder {
+    transition: color 0.4s ease;
+  }
+
+  html[data-atmo="void"] body::before { opacity: 0 !important; }
+  html[data-atmo="void"] body::after  { opacity: 0 !important; }
+  html[data-atmo="void"] .mesh-blob,
+  html[data-atmo="void"] .mesh-blob-2 { opacity: 0 !important; transition: opacity 0.6s; }
+  html[data-atmo="void"] .decoder { box-shadow: none !important; text-shadow: none !important; }
+
+  html[data-atmo="meltdown"] body::before { opacity: 1 !important; mix-blend-mode: screen; }
+  html[data-atmo="meltdown"] body::after  { opacity: 0.22 !important; }
+  html[data-atmo="meltdown"] .mesh-blob {
+    opacity: 1 !important; filter: blur(40px) !important;
+    width: 900px !important; height: 900px !important;
+  }
+  html[data-atmo="meltdown"] .mesh-blob-2 {
+    opacity: 0.9 !important; filter: blur(50px) !important;
+    width: 700px !important; height: 700px !important;
+  }
+  html[data-atmo="meltdown"] .decoder {
+    box-shadow: 0 0 80px rgba(185,255,0,0.7), inset 0 0 40px rgba(185,255,0,0.25) !important;
+    text-shadow: 0 0 40px rgba(185,255,0,1) !important;
+    animation: decoderPulse 0.4s ease-in-out infinite alternate;
+  }
+  @keyframes decoderPulse {
+    from { letter-spacing: -0.01em; }
+    to   { letter-spacing:  0.06em; }
+  }
+  html[data-atmo="meltdown"] .hero h1 {
+    animation: headlineDrift 6s ease-in-out infinite alternate;
+  }
+  @keyframes headlineDrift {
+    from { transform: skewX(0deg); }
+    to   { transform: skewX(-1.5deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">BIOVAGON</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html" class="active">[home]</a>
+    <a href="about.html">[about]</a>
+    <div class="nav-dropdown"><a href="what-we-do.html">[services]</a><div class="nav-dropdown-menu"><a href="primerly.html">→ primerly</a></div></div>
+    <a href="workshops.html">[workshops]</a>
+    <a href="socials.html">[socials]</a>
+    <a href="contact.html" class="nav-cta">→ contact</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">menu</button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="mesh-blob"></div>
+  <div class="mesh-blob-2"></div>
+
+  <div class="hero-inner">
+    <div class="status-bar">
+      <div><span class="dot"></span>LIVE FROM CHENNAI · BIOINFORMATICS LAB</div>
+      <div>UDYAM-TN-11-0062344</div>
+    </div>
+
+    <h1 id="hero-h1">
+      <span id="hl-top">LIFE SCIENCES</span><br />
+      <span id="hl-mid">BUT MAKE IT</span><br />
+      <span class="decoder" id="decoder">ATAAGTAG</span>
+    </h1>
+
+    <div class="hero-bottom" style="grid-template-columns: 1fr;">
+      <p>
+        Biovagon is a bioinformatics lab disguised as a community. We build <strong>AI-powered tools</strong>, run <strong>1:1 mentorship</strong>, and demystify the messy parts of research. From primer design to PhD applications.
+      </p>
+    </div>
+
+    <div class="hero-cta">
+      <a href="workshops.html" class="btn btn-acid">→ SUMMER INTERNSHIP '26 — ENROLLING</a>
+      <a href="primerly.html" class="btn">TRY PRIMERLY (FREE)</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>EMPOWERING LIFE SCIENCES ENTHUSIASTS</span>
+    <span>BUILDING A THRIVING ECOSYSTEM</span>
+    <span>PRIMER DESIGN, DEMYSTIFIED</span>
+    <span>1:1 MENTORSHIP THAT WORKS</span>
+    <span>BENCH TO BIOINFORMATICS</span>
+    <span>EMPOWERING LIFE SCIENCES ENTHUSIASTS</span>
+    <span>BUILDING A THRIVING ECOSYSTEM</span>
+    <span>PRIMER DESIGN, DEMYSTIFIED</span>
+    <span>1:1 MENTORSHIP THAT WORKS</span>
+    <span>BENCH TO BIOINFORMATICS</span>
+  </div>
+</div>
+
+<!-- MISSION + VISION -->
+<section id="mv">
+  <div class="container">
+    <div class="section-tag">// why we exist</div>
+    <h2 class="mv-h">A FRIENDLY GUIDE<br />IN <span style="color:var(--acid); text-shadow: 0 0 30px rgba(185,255,0,0.4);">BIOINFORMATICS</span> /<br />FOR EVERYONE WHO<br />NEEDS ONE.</h2>
+
+    <div class="mv-grid">
+      <div class="mv-card">
+        <div class="mv-num">Mission</div>
+        <div class="mv-tag">// MISSION.LOG</div>
+        <h3>Empowering<br />life sciences enthusiasts</h3>
+        <p>At Biovagon, our mission is to foster a vibrant community for life sciences graduates. We provide a platform that nurtures creativity, learning, and collaboration through online classes, doubt-clearing sessions, and guidance that equips students to embark on their projects and dreams.</p>
+      </div>
+      <div class="mv-card mag">
+        <div class="mv-num">Vision </div>
+        <div class="mv-tag">
+</div>
+        <h3>Building<br />a thriving ecosystem</h3>
+        <p>Biovagon envisions becoming a leading venture in the life sciences domain. The go-to platform for students, startups, and professionals alike. Expanding our programs, collaborating with emerging startups, and inviting individuals to join us in bringing ideas to life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section id="quote">
+  <div class="container">
+    <div class="quote-inner">
+      <div class="quote-portrait-wrap">
+        <div class="quote-portrait">
+          <img
+            src="imgs/kariko-portrait.webp"
+            alt="Dr. Katalin Karikó"
+            style="width:320px; height:380px; display:block; object-fit:cover; border-radius:20px;"
+          />
+        </div>
+        <div class="quote-attr-wrap" style="margin-top:16px; justify-content:center;">
+          <div class="quote-attr" data-comment-anchor="cc-13">DR. KATALIN KARIKÓ</div>
+        </div>
+      </div>
+      <div class="quote-right">
+        <p class="quote-text" style="margin-bottom:0;">
+          "THE JOY OF A SCIENTIST<br />
+          LIES IN TRYING TO <span class="hl-acid">UNDERSTAND</span><br />
+          THE <span class="hl-mag">SECRETS OF LIFE</span>,<br />
+          WITH THE HOPE THAT ONE DAY<br />
+          THOSE SECRETS CAN BE<br />
+          <span class="hl-elec">USEFUL TO SOMEBODY.</span>"
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOPS TEASER -->
+<section style="background: var(--void-2); border-top: 1px solid rgba(185,255,0,0.1); border-bottom: 1px solid rgba(185,255,0,0.1); padding: 80px 24px;">
+  <div class="container">
+    <div class="section-tag">// free live workshops</div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+      <div>
+        <h2 style="font-family:'Bowlby One',sans-serif; font-size:clamp(40px,6vw,80px); line-height:0.92; letter-spacing:-0.03em; text-transform:uppercase; color:var(--bone); margin-bottom:24px;">
+          LEARN.<br />
+          <span style="color:var(--acid); text-shadow:0 0 30px rgba(185,255,0,0.4);">BUILD.</span><br />
+          SHIP.
+        </h2>
+        <p style="font-size:16px; line-height:1.7; color:rgba(240,240,245,0.72); max-width:440px; margin-bottom:32px;">
+          Free live workshops on primer design, bioinformatics tools, NGS analysis, and PhD prep. Over 200 students have attended. The next session is coming up.
+        </p>
+        <div class="cta-group">
+          <a href="workshops.html" class="btn btn-acid">→ SEE ALL WORKSHOPS</a>
+          <a href="https://forms.gle/QPUk67K88S2wMNWB7" target="_blank" class="btn">REGISTER NOW ↗</a>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:rgba(185,255,0,0.1); border:1px solid rgba(185,255,0,0.1);">
+        <div style="background:var(--void-3); padding:28px 24px; text-align:center;">
+          <div style="font-family:'Bowlby One',sans-serif; font-size:52px; color:var(--acid); text-shadow:0 0 25px rgba(185,255,0,0.4); line-height:1; margin-bottom:6px;" data-count="21" data-suffix="+">21+</div>
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey);">Sessions run</div>
+        </div>
+        <div style="background:var(--void-3); padding:28px 24px; text-align:center;">
+          <div style="font-family:'Bowlby One',sans-serif; font-size:52px; color:var(--magenta); text-shadow:0 0 25px rgba(255,0,170,0.4); line-height:1; margin-bottom:6px;" data-count="1000" data-suffix="+">1000+</div>
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey);">Students taught</div>
+        </div>
+        <div style="background:var(--void-3); padding:28px 24px; text-align:center;">
+          <div style="font-family:'Bowlby One',sans-serif; font-size:52px; color:var(--electric); text-shadow:0 0 25px rgba(0,212,255,0.4); line-height:1; margin-bottom:6px;">MSME</div>
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey);">Certified · Govt of India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE -->
+<section id="explore">
+  <div class="container">
+    <div class="section-tag"></div>
+    <h2 class="explore-h">PICK A <em>DOOR.</em></h2>
+
+    <div class="tile-grid">
+      <a href="about.html" class="tile">
+        <div class="tile-num">// 01 / FOUNDER</div>
+        <div>
+          <h3>The<br />founder</h3>
+          <p>Meet Jeevitha. Bioinformatics PhD scholar, four-time published, solo founder.</p>
+        </div>
+        <div class="tile-arrow">→ ENTER</div>
+      </a>
+      <a href="what-we-do.html" class="tile mag">
+        <div class="tile-num">// 02 / SERVICES</div>
+        <div>
+          <h3>What<br />we do</h3>
+          <p>1:1 mentorship, bioinformatics support, wet lab strategy, more.</p>
+        </div>
+        <div class="tile-arrow">→ ENTER</div>
+      </a>
+      <a href="primerly.html" class="tile elec">
+        <div class="tile-num">// 03 / PRIMERLY</div>
+        <div>
+          <h3>Primer<br />ly</h3>
+          <p>Free PCR primer design in your browser. No signup, no cost. Biovagon's flagship tool.</p>
+        </div>
+        <div class="tile-arrow">→ ENTER</div>
+      </a>
+      <a href="workshops.html" class="tile">
+        <div class="tile-num">// 04 / WORKSHOPS</div>
+        <div>
+          <h3>Work<br />shops</h3>
+          <p>Free live sessions on primer design, bioinformatics, and research skills.</p>
+        </div>
+        <div class="tile-arrow">→ ENTER</div>
+      </a>
+      <a href="primer-service.html" class="tile mag">
+        <div class="tile-num">// 05 / SERVICE</div>
+        <div>
+          <h3>Primer<br />design</h3>
+          <p>Custom primer design. Validated, documented, shipped.</p>
+        </div>
+        <div class="tile-arrow">→ ENTER</div>
+      </a>
+      <a href="socials.html" class="tile elec">
+        <div class="tile-num">// 06 / NETWORK</div>
+        <div>
+          <h3>Find<br />us online</h3>
+          <p>All our handles, one page. Pick your platform.</p>
+        </div>
+        <div class="tile-arrow">→ ENTER</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- UDYAM -->
+<section id="udyam">
+  <div class="container">
+    <div class="udyam-card">
+      <div class="udyam-flag">◢ GOVT OF INDIA · MSME ◣</div>
+      <div class="udyam-id">UDYAM-TN-11-0062344</div>
+      <div class="udyam-sub">registered MSME · tamil nadu</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-mega">BIOVAGON</div>
+  <div class="footer-bottom">
+    <div>© 2026 BIOVAGON · UDYAM-TN-11-0062344 · CHENNAI</div>
+    <div class="links">
+      <a href="about.html">about</a>
+      <a href="socials.html">socials</a>
+      <a href="contact.html">contact</a>
+      <a href="https://primerly.onrender.com" target="_blank">primerly ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── DNA DECODER (signature moment) ───
+  const decoder = document.getElementById('decoder');
+  const target = 'BIOVAGON';
+  const nucleotides = 'ATGC';
+  let frame = 0;
+  let decoded = 0;
+
+  function animateDecoder() {
+    frame++;
+
+    // every N frames, lock in a new letter (speed controlled by tweaks)
+    const speed = window.DECODE_SPEED || 8;
+    if (frame % speed === 0 && decoded < target.length) {
+      decoded++;
+    }
+
+    // build display
+    let display = '';
+    for (let i = 0; i < target.length; i++) {
+      if (i < decoded) {
+        display += target[i];
+      } else {
+        display += nucleotides[Math.floor(Math.random() * nucleotides.length)];
+      }
+    }
+    decoder.textContent = display;
+
+    // restart cycle
+    if (decoded === target.length && frame % 8 === 0) {
+      setTimeout(() => {
+        frame = 0;
+        decoded = 0;
+      }, 2000);
+    }
+
+    requestAnimationFrame(animateDecoder);
+  }
+  animateDecoder();
+
+  // ─── SCRAMBLE HOVER ─── (text shuffles to random chars then back)
+  document.querySelectorAll('.scramble-hover').forEach(el => {
+    const original = el.textContent;
+    el.dataset.original = original;
+    let interval;
+
+    el.addEventListener('mouseenter', () => {
+      let iter = 0;
+      clearInterval(interval);
+      interval = setInterval(() => {
+        el.textContent = original
+          .split('')
+          .map((c, i) => i < iter ? original[i] : 'ATGC▓▒░◢◣'.charAt(Math.floor(Math.random() * 9)))
+          .join('');
+        if (iter >= original.length) clearInterval(interval);
+        iter += 1/2;
+      }, 25);
+    });
+  });
+
+  // ─── CURSOR GLOW ───
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursor.style.opacity = '1';
+  });
+
+  // ─── REVEAL ───
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section .container').forEach(el => {
+    el.classList.add('reveal');
+    obs.observe(el);
+  });
+</script>
+
+<div id="tweaks-root"></div>
+<script type="text/babel">
+
+/* ─── TWEAKS PANEL (inline, no external dep) ─── */
+const PANEL_CSS = `
+  .bvt-panel {
+    position: fixed; right: 16px; bottom: 16px; z-index: 9999;
+    width: 260px;
+    background: rgba(10,10,15,0.92);
+    border: 1px solid rgba(185,255,0,0.35);
+    box-shadow: 0 0 40px rgba(185,255,0,0.12), 0 8px 32px rgba(0,0,0,0.6);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #f0f0f5;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .bvt-hd {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(185,255,0,0.15);
+    cursor: move; user-select: none;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--acid, #b9ff00);
+  }
+  .bvt-hd::before { content: '◢'; margin-right: 8px; font-size: 8px; }
+  .bvt-close {
+    background: none; border: none; color: #5a5a6e;
+    font-family: 'Space Mono', monospace; font-size: 13px;
+    cursor: pointer; padding: 0 2px; line-height: 1;
+    transition: color 0.15s;
+  }
+  .bvt-close:hover { color: #f0f0f5; }
+  .bvt-body { padding: 14px; display: flex; flex-direction: column; gap: 16px; }
+  .bvt-sect {
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: #5a5a6e; padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .bvt-row { display: flex; flex-direction: column; gap: 6px; }
+  .bvt-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(240,240,245,0.55); }
+  .bvt-select {
+    width: 100%; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(185,255,0,0.2);
+    color: #f0f0f5;
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    padding: 8px 10px;
+    appearance: none; -webkit-appearance: none;
+    outline: none; cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%23b9ff00' d='M0 0h10L5 6z'/></svg>");
+    background-repeat: no-repeat; background-position: right 10px center;
+    transition: border-color 0.15s;
+  }
+  .bvt-select:focus { border-color: rgba(185,255,0,0.5); }
+  .bvt-select option { background: #12121a; }
+`;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "signal": "acid",
+  "atmosphere": "lab",
+  "decodeSpeed": "default"
+}/*EDITMODE-END*/;
+
+const SIGNALS = {
+  acid:     { acid: '#b9ff00', magenta: '#ff00aa', electric: '#00d4ff' },
+  magenta:  { acid: '#ff00aa', magenta: '#b9ff00', electric: '#00d4ff' },
+  electric: { acid: '#00d4ff', magenta: '#ff00aa', electric: '#b9ff00' }
+};
+const DECODE_SPEEDS = { crawl: 22, default: 8, surge: 2 };
+
+function applySignal(sig) {
+  const p = SIGNALS[sig] || SIGNALS.acid;
+  const r = document.documentElement.style;
+  r.setProperty('--acid',     p.acid);
+  r.setProperty('--magenta',  p.magenta);
+  r.setProperty('--electric', p.electric);
+  r.setProperty('--acid-glow', p.acid);
+}
+function applyAtmosphere(atmo) {
+  document.documentElement.setAttribute('data-atmo', atmo);
+}
+function applyDecode(speed) {
+  window.DECODE_SPEED = DECODE_SPEEDS[speed] || 8;
+}
+
+function useBVTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((key, val) => {
+    const edits = typeof key === 'object' ? key : { [key]: val };
+    setValues(prev => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+  }, []);
+  return [values, setTweak];
+}
+
+function BVSelect({ label, value, options, onChange }) {
+  return (
+    <div className="bvt-row">
+      <div className="bvt-lbl">{label}</div>
+      <select className="bvt-select" value={value} onChange={e => onChange(e.target.value)}>
+        {options.map(o => <option key={o} value={o}>{o.toUpperCase()}</option>)}
+      </select>
+    </div>
+  );
+}
+
+function BiovagonTweaks() {
+  const [open, setOpen] = React.useState(false);
+  const [t, setTweak] = useBVTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      if (e.data?.type === '__activate_edit_mode')   setOpen(true);
+      if (e.data?.type === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  React.useEffect(() => { applySignal(t.signal); },         [t.signal]);
+  React.useEffect(() => { applyAtmosphere(t.atmosphere); }, [t.atmosphere]);
+  React.useEffect(() => { applyDecode(t.decodeSpeed); },    [t.decodeSpeed]);
+
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  if (!open) return null;
+  return (
+    <>
+      <style>{PANEL_CSS}</style>
+      <div className="bvt-panel">
+        <div className="bvt-hd">
+          TWEAKS
+          <button className="bvt-close" onClick={dismiss}>✕</button>
+        </div>
+        <div className="bvt-body">
+          <div className="bvt-sect">// signal</div>
+          <BVSelect label="Accent colour"
+            value={t.signal}
+            options={['acid','magenta','electric']}
+            onChange={v => setTweak('signal', v)}
+          />
+          <div className="bvt-sect">// atmosphere</div>
+          <BVSelect label="Visual intensity"
+            value={t.atmosphere}
+            options={['void','lab','meltdown']}
+            onChange={v => setTweak('atmosphere', v)}
+          />
+          <div className="bvt-sect">// decode</div>
+          <BVSelect label="ATGC → BIOVAGON speed"
+            value={t.decodeSpeed}
+            options={['crawl','default','surge']}
+            onChange={v => setTweak('decodeSpeed', v)}
+          />
+        </div>
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<BiovagonTweaks />);
+</script>
+
+<script src="shared.js"></script>
+</body>
+</html>

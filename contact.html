@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+
+  <meta name="description" content="Get in touch with Biovagon. Book a mentorship session, request a primer design quote, or just say hi. Based in Chennai." />
+  <meta property="og:title" content="Contact — Biovagon" />
+  <meta property="og:description" content="Get in touch with Biovagon. Book a mentorship session, request a primer design quote, or just say hi. Based in Chennai." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biovagon" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact — Biovagon" />
+  <meta name="twitter:description" content="Get in touch with Biovagon. Book a mentorship session, request a primer design quote, or just say hi. Based in Chennai." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIOVAGON // contact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="shared.css" />
+<style>
+  .mesh-blob {
+    position: absolute; width: 650px; height: 650px;
+    top: 30%; right: -150px; border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 45%, var(--acid) 0%, transparent 50%),
+      radial-gradient(circle at 65% 65%, var(--magenta) 0%, transparent 50%);
+    filter: blur(80px); opacity: 0.35;
+    animation: meshSpin 22s linear infinite; z-index: 0;
+  }
+
+  /* ─── LAYOUT ─── */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* ─── LEFT: INFO ─── */
+  .contact-info { }
+  .info-block {
+    margin-bottom: 48px;
+  }
+  .info-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .info-label::before { content: '◢'; font-size: 8px; }
+  .info-value {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    text-transform: uppercase;
+  }
+  .info-value a {
+    color: var(--bone);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .info-value a:hover { color: var(--acid); text-shadow: 0 0 12px rgba(185,255,0,0.4); }
+  .info-sub {
+    font-size: 13px;
+    color: var(--grey);
+    font-family: 'Space Mono', monospace;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .response-box {
+    background: var(--void-2);
+    border: 1px solid rgba(185,255,0,0.2);
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+  .response-box-top {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+    margin-bottom: 12px;
+  }
+  .response-list { list-style: none; }
+  .response-list li {
+    font-size: 13px;
+    color: rgba(240,240,245,0.7);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between;
+    align-items: center;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .response-list li:last-child { border-bottom: none; }
+  .response-list li span { color: var(--acid); font-weight: 700; }
+
+  .udyam-mini {
+    background: var(--void-3);
+    border: 1px solid rgba(185,255,0,0.15);
+    padding: 18px 22px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .udyam-mini .u-flag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--grey);
+  }
+  .udyam-mini .u-id {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 20px; color: var(--acid);
+    text-shadow: 0 0 15px rgba(185,255,0,0.4);
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── RIGHT: FORM ─── */
+  .contact-form {
+    background: var(--void-2);
+    border: 1px solid rgba(185,255,0,0.15);
+    padding: 52px 48px;
+    position: relative;
+  }
+  .contact-form::before {
+    content: '// SEND A MESSAGE';
+    position: absolute; top: -1px; left: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--acid);
+    background: var(--acid);
+    color: var(--void);
+    padding: 4px 14px;
+    font-weight: 700;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    margin-bottom: 8px;
+  }
+  .form-label .req { color: var(--acid); margin-left: 4px; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--void);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--bone);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--acid);
+    box-shadow: 0 0 20px rgba(185,255,0,0.1);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--grey); }
+  .form-select { cursor: pointer; color: var(--bone); }
+  .form-select option { background: var(--void-2); }
+  .form-textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--acid);
+    color: var(--void);
+    border: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 18px 24px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--magenta);
+    transition: all 0.15s;
+    margin-top: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .form-submit:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 var(--magenta);
+  }
+  .form-submit:active { transform: translate(0,0); box-shadow: 2px 2px 0 var(--magenta); }
+
+  .form-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .form-submit-wa {
+    background: #25d366 !important;
+    color: #0a0a0f !important;
+    border-color: #25d366 !important;
+    box-shadow: 4px 4px 0 var(--electric) !important;
+  }
+  .form-submit-wa:hover {
+    box-shadow: 6px 6px 0 var(--electric) !important;
+  }
+
+  .form-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  /* ─── SUCCESS STATE ─── */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .form-success.visible { display: block; }
+  .form-success .big-check {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 80px;
+    color: var(--acid);
+    text-shadow: 0 0 40px rgba(185,255,0,0.5);
+    margin-bottom: 20px;
+  }
+  .form-success h3 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 36px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    margin-bottom: 10px;
+  }
+  .form-success p {
+    font-size: 14px;
+    color: rgba(240,240,245,0.65);
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 900px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-form { padding: 44px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="logo">BIOVAGON</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">[home]</a>
+    <a href="about.html">[about]</a>
+    <div class="nav-dropdown"><a href="what-we-do.html">[services]</a><div class="nav-dropdown-menu"><a href="primerly.html">→ primerly</a></div></div>
+    <a href="workshops.html">[workshops]</a>
+    <a href="socials.html">[socials]</a>
+    <a href="contact.html" class="nav-cta active">→ contact</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">menu</button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero" style="min-height:45vh;">
+  <div class="mesh-blob"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">// reach out</div>
+    <h1>
+      LET'S<br />
+      <span class="accent">TALK.</span>
+    </h1>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<section>
+  <div class="container reveal">
+    <div class="contact-layout">
+
+      <!-- LEFT -->
+      <div class="contact-info">
+        <div class="info-block">
+          <div class="info-label">Email</div>
+          <div class="info-value"><a href="mailto:biovagon.sm@gmail.com">biovagon.sm@gmail.com</a></div>
+          <div class="info-sub">for all enquiries</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Location</div>
+          <div class="info-value">Chennai, Tamil Nadu</div>
+          <div class="info-sub">India · UTC+5:30</div>
+        </div>
+        <div class="response-box">
+          <div class="response-box-top">
+            <span class="dot"></span>
+            TYPICAL RESPONSE TIMES
+          </div>
+          <ul class="response-list">
+            <li>General enquiry <span>&lt; 24h</span></li>
+            <li>Primer design order <span>&lt; 12h</span></li>
+            <li>Mentorship booking <span>&lt; 6h</span></li>
+            <li>Tool support <span>&lt; 48h</span></li>
+          </ul>
+        </div>
+
+        <div class="udyam-mini">
+          <div class="u-flag">◢ Govt of India · MSME ◣</div>
+          <div class="u-id">UDYAM-TN-11-0062344</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="contact-form">
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="fname">Name <span class="req">*</span></label>
+              <input class="form-input" type="text" id="fname" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="femail">Email <span class="req">*</span></label>
+              <input class="form-input" type="email" id="femail" name="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ftype">What do you need? <span class="req">*</span></label>
+            <select class="form-select" id="ftype" name="type" required>
+              <option value="" disabled selected>Select a service</option>
+              <option value="mentorship">1:1 Mentorship Session</option>
+              <option value="bioinformatics">Bioinformatics Analysis Support</option>
+              <option value="primer-design">Custom Primer Design</option>
+              <option value="wet-lab">Wet Lab Strategy</option>
+              <option value="phd">PhD Application Guidance</option>
+              <option value="workshop">Online Class / Workshop</option>
+              <option value="feedback">Feedback / Suggestions</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="forg">Institution / Organization</label>
+            <input class="form-input" type="text" id="forg" name="org" placeholder="University, company, or independent" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="fmsg">Message <span class="req">*</span></label>
+            <textarea class="form-textarea" id="fmsg" name="message" placeholder="Describe your project, question, or what you're working on. The more detail the better." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ftimeline">Timeline / Urgency</label>
+            <select class="form-select" id="ftimeline" name="timeline">
+              <option value="" disabled selected>How soon do you need this?</option>
+              <option value="urgent">ASAP (within 24h)</option>
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+              <option value="flexible">Flexible</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="form-submit">→ SEND VIA EMAIL</button>
+            <button type="button" class="form-submit form-submit-wa" id="waBtn">↗ SEND ON WHATSAPP</button>
+          </div>
+          <div class="form-note">// reaches biovagon.sm@gmail.com · or WhatsApp +91 94889 92423</div>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="big-check">✓</div>
+          <h3 id="successTitle">Done.</h3>
+          <p id="successMsg">// we'll be in touch within 24 hours</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>BOOK A SESSION</span>
+    <span>ORDER PRIMERS</span>
+    <span>GET MENTORED</span>
+    <span>ASK ANYTHING</span>
+    <span>WE RESPOND FAST</span>
+    <span>BOOK A SESSION</span>
+    <span>ORDER PRIMERS</span>
+    <span>GET MENTORED</span>
+    <span>ASK ANYTHING</span>
+    <span>WE RESPOND FAST</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mega">BIOVAGON</div>
+  <div class="footer-bottom">
+    <div>© 2026 BIOVAGON · UDYAM-TN-11-0062344 · CHENNAI</div>
+    <div class="links">
+      <a href="about.html">about</a>
+      <a href="socials.html">socials</a>
+      <a href="contact.html">contact</a>
+      <a href="https://primerly.onrender.com" target="_blank">primerly ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Pre-select dropdown from URL ?type= param
+  const params = new URLSearchParams(window.location.search);
+  const preType = params.get('type');
+  if (preType) {
+    const sel = document.getElementById('ftype');
+    if (sel) sel.value = preType;
+  }
+
+  function collectFormData() {
+    const name     = document.getElementById('fname').value;
+    const email    = document.getElementById('femail').value;
+    const type     = document.getElementById('ftype').value;
+    const org      = document.getElementById('forg').value;
+    const msg      = document.getElementById('fmsg').value;
+    const timeline = document.getElementById('ftimeline').value;
+    return { name, email, type, org, msg, timeline };
+  }
+
+  function showSuccess(method) {
+    document.getElementById('contactForm').style.display = 'none';
+    if (method === 'wa') {
+      document.getElementById('successTitle').textContent = 'WhatsApp Opened.';
+      document.getElementById('successMsg').textContent = '// tap Send inside WhatsApp to complete';
+    } else {
+      document.getElementById('successTitle').textContent = 'Email Opened.';
+      document.getElementById('successMsg').textContent = '// hit Send in your mail app — we reply within 24h';
+    }
+    document.getElementById('formSuccess').classList.add('visible');
+  }
+
+  // Email via mailto (anchor-click method — not blocked by browsers)
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = collectFormData();
+    const subject = encodeURIComponent(`[Biovagon] ${f.type || 'Enquiry'} from ${f.name}`);
+    const body = encodeURIComponent(
+      `Name: ${f.name}\nEmail: ${f.email}\nService: ${f.type}\nOrganisation: ${f.org || '—'}\nTimeline: ${f.timeline || '—'}\n\nMessage:\n${f.msg}`
+    );
+    const a = document.createElement('a');
+    a.href = `mailto:biovagon.sm@gmail.com?subject=${subject}&body=${body}`;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showSuccess('email');
+  });
+
+  // WhatsApp — opens WA with pre-filled text; user taps Send manually inside WA
+  document.getElementById('waBtn').addEventListener('click', () => {
+    const form = document.getElementById('contactForm');
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const f = collectFormData();
+    const text = encodeURIComponent(
+      `*New Enquiry — Biovagon*\n\nName: ${f.name}\nEmail: ${f.email}\nService: ${f.type}\nOrganisation: ${f.org || '—'}\nTimeline: ${f.timeline || '—'}\n\nMessage:\n${f.msg}`
+    );
+    window.open(`https://wa.me/919488992423?text=${text}`, '_blank');
+    showSuccess('wa');
+  });
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

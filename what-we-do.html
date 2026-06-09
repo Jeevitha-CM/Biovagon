@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+
+  <meta name="description" content="Biovagon offers mentorship, bioinformatics analysis, wet lab strategy, primer design, PhD guidance, and online workshops for life science researchers." />
+  <meta property="og:title" content="Services — Biovagon" />
+  <meta property="og:description" content="Biovagon offers mentorship, bioinformatics analysis, wet lab strategy, primer design, PhD guidance, and online workshops for life science researchers." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biovagon" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Services — Biovagon" />
+  <meta name="twitter:description" content="Biovagon offers mentorship, bioinformatics analysis, wet lab strategy, primer design, PhD guidance, and online workshops for life science researchers." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIOVAGON // what we do</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="shared.css" />
+<script src="image-slot.js"></script>
+<style>
+  .mesh-blob {
+    position: absolute;
+    width: 700px; height: 700px;
+    top: 50%; right: -200px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 40%, var(--magenta) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, var(--electric) 0%, transparent 50%);
+    filter: blur(80px);
+    opacity: 0.45;
+    animation: meshSpin 28s linear infinite;
+    z-index: 0;
+  }
+
+  /* ─── SERVICE TILES ─── */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(185,255,0,0.12);
+    border: 1px solid rgba(185,255,0,0.12);
+    margin-bottom: 80px;
+  }
+  .service-tile {
+    background: var(--void-2);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .service-tile::before {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 2px;
+    transition: left 0.6s;
+  }
+  .service-tile.a::before { background: linear-gradient(90deg, transparent, var(--acid), transparent); }
+  .service-tile.m::before { background: linear-gradient(90deg, transparent, var(--magenta), transparent); }
+  .service-tile.e::before { background: linear-gradient(90deg, transparent, var(--electric), transparent); }
+  .service-tile:hover::before { left: 100%; }
+  .service-tile:hover { background: var(--void-3); transform: translateY(-4px); }
+
+  .service-icon {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 20px;
+    letter-spacing: -0.04em;
+  }
+  .service-tile.a .service-icon { color: var(--acid); text-shadow: 0 0 30px rgba(185,255,0,0.5); }
+  .service-tile.m .service-icon { color: var(--magenta); text-shadow: 0 0 30px rgba(255,0,170,0.5); }
+  .service-tile.e .service-icon { color: var(--electric); text-shadow: 0 0 30px rgba(0,212,255,0.5); }
+
+  .service-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    margin-bottom: 16px;
+  }
+  .service-tile h3 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 28px;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--bone);
+    transition: color 0.3s;
+  }
+  .service-tile.a:hover h3 { color: var(--acid); }
+  .service-tile.m:hover h3 { color: var(--magenta); }
+  .service-tile.e:hover h3 { color: var(--electric); }
+  .service-tile p { font-size: 14px; line-height: 1.65; color: rgba(240,240,245,0.65); margin-bottom: 24px; }
+  .service-tag {
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border: 1px solid;
+  }
+  .service-tile.a .service-tag { color: var(--acid); border-color: rgba(185,255,0,0.4); }
+  .service-tile.m .service-tag { color: var(--magenta); border-color: rgba(255,0,170,0.4); }
+  .service-tile.e .service-tag { color: var(--electric); border-color: rgba(0,212,255,0.4); }
+
+  /* ─── HOW IT WORKS ─── */
+  .process-list {
+    display: flex; flex-direction: column;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .process-step {
+    background: var(--void-2);
+    padding: 40px 44px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 40px;
+    align-items: center;
+    transition: background 0.2s;
+  }
+  .process-step:hover { background: var(--void-3); }
+  .step-n {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(185,255,0,0.2);
+    transition: all 0.3s;
+  }
+  .process-step:hover .step-n { color: var(--acid); text-shadow: 0 0 30px rgba(185,255,0,0.4); }
+  .step-body h4 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: var(--bone);
+  }
+  .step-body p { font-size: 14px; line-height: 1.65; color: rgba(240,240,245,0.65); max-width: 600px; }
+  .step-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+    white-space: nowrap;
+    padding: 6px 12px;
+    border: 1px solid rgba(185,255,0,0.3);
+  }
+
+  /* ─── TESTIMONIAL ─── */
+  .testimonial-block {
+    background: var(--void-3);
+    border: 1px solid rgba(185,255,0,0.2);
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 80px;
+  }
+  .testimonial-block::before {
+    content: '"';
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 280px;
+    position: absolute;
+    top: -40px; left: 30px;
+    color: rgba(185,255,0,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .testimonial-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    line-height: 1.5;
+    color: var(--bone);
+    max-width: 800px;
+    position: relative; z-index: 1;
+    margin-bottom: 32px;
+  }
+  .testimonial-attr {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+  }
+  .testimonial-attr::before { content: '◢ '; }
+
+  @media (max-width: 900px) {
+    .service-grid { grid-template-columns: 1fr; }
+    .process-step { grid-template-columns: 60px 1fr; gap: 24px; }
+    .primer-featured-grid { grid-template-columns: 1fr !important; }
+    .primer-featured-grid > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(255,0,170,0.15); }
+    .step-tag { display: none; }
+    .step-n { font-size: 44px; }
+    .testimonial-block { padding: 36px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="logo">BIOVAGON</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">[home]</a>
+    <a href="about.html">[about]</a>
+    <div class="nav-dropdown"><a href="what-we-do.html" class="active">[services]</a><div class="nav-dropdown-menu"><a href="primerly.html">→ primerly</a></div></div>
+    <a href="workshops.html">[workshops]</a>
+    <a href="socials.html">[socials]</a>
+    <a href="contact.html" class="nav-cta">→ contact</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">menu</button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="mesh-blob"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">// 02 / SERVICES</div>
+    <h1>
+      WHAT<br />
+      WE <span class="acc-mag">DO.</span>
+    </h1>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section>
+  <div class="container reveal">
+    <div class="section-tag">// our offerings</div>
+    <h2 class="section-h">SIX WAYS<br />WE <span class="a">HELP.</span></h2>
+
+    <div class="service-grid">
+      <div class="service-tile a">
+        <div class="service-num">// 01</div>
+        <div class="service-icon">1:1</div>
+        <h3>Mentorship<br />Sessions</h3>
+        <p>Personalized guidance through your research, career decisions, and PhD journey. Real advice from someone who's been there.</p>
+        <a href="contact.html?type=mentorship" class="service-tag">BOOK A SLOT</a>
+      </div>
+      <div class="service-tile m">
+        <div class="service-num">// 02</div>
+        <div class="service-icon">BI</div>
+        <h3>Bioinformatics<br />Analysis</h3>
+        <p>End-to-end computational analysis support — NGS pipelines, variant calling, protein structure prediction, and beyond.</p>
+        <a href="contact.html?type=bioinformatics" class="service-tag">GET SUPPORT</a>
+      </div>
+      <div class="service-tile e">
+        <div class="service-num">// 03</div>
+        <div class="service-icon">WL</div>
+        <h3>Wet Lab<br />Strategy</h3>
+        <p>Experimental design, protocol troubleshooting, and bridging the gap between bench work and computational analysis.</p>
+        <a href="contact.html?type=wet-lab" class="service-tag">ENQUIRE</a>
+      </div>
+      <div class="service-tile e">
+        <div class="service-num">// 04</div>
+        <div class="service-icon">PhD</div>
+        <h3>PhD Application<br />Guidance</h3>
+        <p>Shortlisting labs, writing SOPs, preparing for interviews — navigating the PhD maze with a guide who got through it.</p>
+        <a href="contact.html?type=phd" class="service-tag">GET HELP</a>
+      </div>
+      <div class="service-tile m">
+        <div class="service-num">// 05</div>
+        <div class="service-icon">PD</div>
+        <h3>Primer<br />Design</h3>
+        <p>Custom, validated primer pairs designed for your exact experiment. Powered by Primerly — our own tool.</p>
+        <a href="#primer-design-featured" class="service-tag">↓ SEE DETAILS</a>
+      </div>
+      <div class="service-tile e">
+        <div class="service-num">// 06</div>
+        <div class="service-icon">OC</div>
+        <h3>Online<br />Workshops</h3>
+        <p>Hands-on live sessions on primer design, NGS analysis, bioinformatics tools, and molecular docking. Real science, open to everyone.</p>
+        <a href="workshops.html" class="service-tag">SEE WORKSHOPS</a>
+      </div>
+    </div>
+
+    <div class="cta-group">
+      <a href="contact.html" class="btn btn-acid">→ BOOK A SESSION</a>
+      <a href="primer-service.html" class="btn btn-mag">PRIMER DESIGN SERVICE</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRIMER DESIGN FEATURED -->
+<section id="primer-design-featured" style="background: var(--void-2); border-bottom: 1px solid rgba(255,0,170,0.15);">
+  <div class="container reveal">
+    <div class="section-tag" style="border-color:var(--magenta); color:var(--magenta); background:rgba(255,0,170,0.05);">// most requested service</div>
+    <div class="primer-featured-grid" style="
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid rgba(255,0,170,0.25);
+      box-shadow: 0 0 80px rgba(255,0,170,0.08);
+      position: relative;
+      overflow: hidden;
+    ">
+      <div style="position:absolute; top:0; left:0; background:var(--magenta); color:var(--void); font-family:'Space Mono',monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; padding:5px 16px;">// PRIMER DESIGN SERVICE</div>
+
+      <!-- Left: info -->
+      <div style="padding: 56px 48px 48px; border-right: 1px solid rgba(255,0,170,0.15);">
+        <h2 style="font-family:'Bowlby One',sans-serif; font-size:clamp(32px,4vw,56px); line-height:0.92; letter-spacing:-0.03em; text-transform:uppercase; color:var(--bone); margin-bottom:16px;">CUSTOM<br />PRIMERS.<br /><span style="color:var(--magenta);">VALIDATED.</span></h2>
+        <p style="font-size:15px; line-height:1.75; color:rgba(240,240,245,0.72); margin-bottom:28px; max-width:420px;">Send us your sequence and requirements. We design, validate, and deliver primer pairs ready for your bench — with full documentation and confidence scores.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:36px;">
+          <div><div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:4px;">Turnaround</div><div style="font-family:'Bowlby One',sans-serif; font-size:18px; text-transform:uppercase; letter-spacing:-0.02em; color:var(--bone);">24–48 HRS</div></div>
+          <div><div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:4px;">Powered by</div><div style="font-family:'Bowlby One',sans-serif; font-size:18px; text-transform:uppercase; letter-spacing:-0.02em; color:var(--magenta);">PRIMERLY</div></div>
+          <div><div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:4px;">Certificate</div><div style="font-family:'Bowlby One',sans-serif; font-size:18px; text-transform:uppercase; letter-spacing:-0.02em; color:var(--bone);">MSME</div></div>
+          <div><div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:4px;">Scoring</div><div style="font-family:'Bowlby One',sans-serif; font-size:18px; text-transform:uppercase; letter-spacing:-0.02em; color:var(--bone);">BIOVAGON</div></div>
+        </div>
+        <a href="contact.html?type=primer-design" class="btn btn-mag">→ GET A QUOTE</a>
+      </div>
+
+      <!-- Right: deliverables -->
+      <div style="padding: 56px 48px 48px;">
+        <div style="font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:20px;">// what you get</div>
+        <div style="display:flex; flex-direction:column; gap:1px;">
+          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; color:rgba(240,240,245,0.8);"><span style="font-family:'Bowlby One',sans-serif; font-size:20px; color:var(--magenta); text-shadow:0 0 15px rgba(255,0,170,0.4); min-width:32px;">01</span>Forward &amp; reverse primer sequences</div>
+          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; color:rgba(240,240,245,0.8);"><span style="font-family:'Bowlby One',sans-serif; font-size:20px; color:var(--acid); text-shadow:0 0 15px rgba(185,255,0,0.4); min-width:32px;">02</span>Tm, GC%, hairpin &amp; dimer analysis</div>
+          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; color:rgba(240,240,245,0.8);"><span style="font-family:'Bowlby One',sans-serif; font-size:20px; color:var(--electric); text-shadow:0 0 15px rgba(0,212,255,0.4); min-width:32px;">03</span>Biovagon confidence score</div>
+          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; color:rgba(240,240,245,0.8);"><span style="font-family:'Bowlby One',sans-serif; font-size:20px; color:var(--magenta); text-shadow:0 0 15px rgba(255,0,170,0.4); min-width:32px;">04</span>Specificity check via NCBI BLAST</div>
+          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; font-size:14px; color:rgba(240,240,245,0.8);"><span style="font-family:'Bowlby One',sans-serif; font-size:20px; color:var(--acid); text-shadow:0 0 15px rgba(185,255,0,0.4); min-width:32px;">05</span>Full PDF report — bench-ready</div>
+        </div>
+        <div style="margin-top:28px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.06); font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey);">// also powered by <span style="color:var(--magenta);">PRIMERLY</span> — <a href="primerly.html" style="color:var(--acid); text-decoration:none;">try it free ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>1:1 MENTORSHIP</span>
+    <span>BIOINFORMATICS ANALYSIS</span>
+    <span>WET LAB STRATEGY</span>
+    <span>PRIMER DESIGN</span>
+    <span>PHD GUIDANCE</span>
+    <span>ONLINE WORKSHOPS</span>
+    <span>1:1 MENTORSHIP</span>
+    <span>BIOINFORMATICS ANALYSIS</span>
+    <span>WET LAB STRATEGY</span>
+    <span>PRIMER DESIGN</span>
+    <span>PHD GUIDANCE</span>
+    <span>ONLINE WORKSHOPS</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section style="background: var(--void-2); border-top: 1px solid rgba(185,255,0,0.1); border-bottom: 1px solid rgba(185,255,0,0.1);">
+  <div class="container reveal">
+    <div class="section-tag">// process</div>
+    <h2 class="section-h">HOW IT<br /><span class="m">WORKS.</span></h2>
+
+    <div class="process-list">
+      <div class="process-step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          <h4>Tell Us What You Need</h4>
+          <p>Fill out the contact form or drop a message. Describe your project, your timeline, and where you're stuck. No jargon gatekeeping — be as specific or as vague as you like.</p>
+        </div>
+        <div class="step-tag">~24H RESPONSE</div>
+      </div>
+      <div class="process-step">
+        <div class="step-n" style="color: rgba(255,0,170,0.2);">02</div>
+        <div class="step-body">
+          <h4>We Scope the Work Together</h4>
+          <p>A quick call or message thread to understand the full picture. We confirm deliverables, turnaround, and pricing — no surprises.</p>
+        </div>
+        <div class="step-tag" style="color:var(--magenta); border-color: rgba(255,0,170,0.3);">SCOPING CALL</div>
+      </div>
+      <div class="process-step">
+        <div class="step-n" style="color: rgba(0,212,255,0.2);">03</div>
+        <div class="step-body">
+          <h4>We Execute</h4>
+          <p>Sessions, analyses, designs, or documents — delivered with full transparency. You stay in the loop throughout, not just at the end.</p>
+        </div>
+        <div class="step-tag" style="color:var(--electric); border-color: rgba(0,212,255,0.3);">IN PROGRESS</div>
+      </div>
+      <div class="process-step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          <h4>You Walk Away Smarter</h4>
+          <p>Every engagement comes with explanation and context. The goal isn't just to solve your problem — it's to make sure you could solve the next one yourself.</p>
+        </div>
+        <div class="step-tag">DELIVERED ✓</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="container reveal" style="text-align: center;">
+    <div class="section-tag" style="margin: 0 auto 30px;">// ready to start?</div>
+    <h2 class="section-h" style="text-align: center; max-width: 100%;">
+      LET'S DO<br /><span class="a">SCIENCE.</span>
+    </h2>
+    <div class="cta-group" style="justify-content: center;">
+      <a href="contact.html" class="btn btn-acid">→ GET IN TOUCH</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-mega">BIOVAGON</div>
+  <div class="footer-bottom">
+    <div>© 2026 BIOVAGON · UDYAM-TN-11-0062344 · CHENNAI</div>
+    <div class="links">
+      <a href="about.html">about</a>
+      <a href="socials.html">socials</a>
+      <a href="contact.html">contact</a>
+      <a href="https://primerly.onrender.com" target="_blank">primerly ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

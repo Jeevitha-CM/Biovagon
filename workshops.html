@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+
+  <meta name="description" content="Hands-on live workshops on primer design, NGS analysis, molecular docking, and more. Real science, accessible to everyone." />
+  <meta property="og:title" content="Workshops — Biovagon" />
+  <meta property="og:description" content="Hands-on live workshops on primer design, NGS analysis, molecular docking, and more. Real science, accessible to everyone." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biovagon" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Workshops — Biovagon" />
+  <meta name="twitter:description" content="Hands-on live workshops on primer design, NGS analysis, molecular docking, and more. Real science, accessible to everyone." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIOVAGON // workshops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="shared.css" />
+<style>
+  .mesh-blob {
+    position: absolute; width: 700px; height: 700px;
+    top: 40%; right: -150px; border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 40%, var(--magenta) 0%, transparent 50%),
+      radial-gradient(circle at 65% 65%, var(--acid) 0%, transparent 50%);
+    filter: blur(80px); opacity: 0.4;
+    animation: meshSpin 26s linear infinite; z-index: 0;
+  }
+
+  /* ─── NEXT SESSION ─── */
+  .next-session {
+    background: var(--void-3);
+    border: 1px solid var(--acid);
+    box-shadow: 0 0 60px rgba(185,255,0,0.12);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-session::before {
+    content: '// NEXT SESSION';
+    position: absolute; top: 0; left: 0;
+    background: var(--acid); color: var(--void);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.2em;
+    padding: 5px 16px;
+  }
+  .ns-info {
+    padding: 56px 48px 48px;
+    border-right: 1px solid rgba(185,255,0,0.15);
+  }
+  .ns-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--acid);
+    margin-bottom: 20px;
+  }
+  .ns-badge .dot { flex-shrink: 0; }
+  .ns-title {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 0.95; letter-spacing: -0.03em;
+    text-transform: uppercase; color: var(--bone);
+    margin-bottom: 16px;
+  }
+  .ns-title .a { color: var(--acid); }
+  .ns-sub {
+    font-size: 15px; line-height: 1.7;
+    color: rgba(240,240,245,0.72);
+    margin-bottom: 32px; max-width: 440px;
+  }
+  .ns-meta {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 36px;
+  }
+  .ns-meta-item { }
+  .ns-meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--grey); margin-bottom: 4px;
+  }
+  .ns-meta-val {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 18px; text-transform: uppercase;
+    letter-spacing: -0.02em; color: var(--bone);
+  }
+
+  .ns-topics {
+    padding: 56px 48px 48px;
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .ns-topics-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--grey); margin-bottom: 20px;
+  }
+  .topic-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px; color: rgba(240,240,245,0.8);
+    line-height: 1.4;
+  }
+  .topic-item:last-child { border-bottom: none; }
+  .topic-n {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px; color: var(--acid);
+    text-shadow: 0 0 15px rgba(185,255,0,0.4);
+    min-width: 36px; line-height: 1;
+  }
+  .topic-item.m .topic-n { color: var(--magenta); text-shadow: 0 0 15px rgba(255,0,170,0.4); }
+  .topic-item.e .topic-n { color: var(--electric); text-shadow: 0 0 15px rgba(0,212,255,0.4); }
+
+  /* ─── PAST WORKSHOPS ─── */
+  .past-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(185,255,0,0.1);
+    border: 1px solid rgba(185,255,0,0.1);
+    margin-bottom: 80px;
+  }
+  .past-card {
+    background: var(--void-2);
+    padding: 36px 32px;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .past-card:hover { background: var(--void-3); }
+  .past-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .past-card.a::after { background: var(--acid); box-shadow: 0 0 10px var(--acid); }
+  .past-card.m::after { background: var(--magenta); box-shadow: 0 0 10px var(--magenta); }
+  .past-card.e::after { background: var(--electric); box-shadow: 0 0 10px var(--electric); }
+  .past-card:hover::after { transform: scaleX(1); }
+  .past-card-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .past-n {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 52px; line-height: 0.9;
+    letter-spacing: -0.04em; color: rgba(185,255,0,0.1);
+    transition: color 0.3s;
+  }
+  .past-card.m .past-n { color: rgba(255,0,170,0.1); }
+  .past-card.e .past-n { color: rgba(0,212,255,0.1); }
+  .past-card:hover.a .past-n { color: rgba(185,255,0,0.2); }
+  .past-card:hover.m .past-n { color: rgba(255,0,170,0.2); }
+  .past-card:hover.e .past-n { color: rgba(0,212,255,0.2); }
+  .past-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--grey); text-align: right;
+  }
+  .past-title {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 24px; line-height: 0.95;
+    letter-spacing: -0.02em; text-transform: uppercase;
+    color: var(--bone); margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+  .past-card.a:hover .past-title { color: var(--acid); }
+  .past-card.m:hover .past-title { color: var(--magenta); }
+  .past-card.e:hover .past-title { color: var(--electric); }
+  .past-desc {
+    font-size: 13px; line-height: 1.55;
+    color: rgba(240,240,245,0.55);
+    margin-bottom: 20px;
+  }
+  .past-stat {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--grey);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .past-stat::before { content: '//'; }
+
+  /* ─── SWIPE TESTIMONIALS ─── */
+  .swipe-wrap { margin-bottom: 60px; }
+  .swipe-stage {
+    position: relative;
+    height: 300px;
+    overflow: visible;
+  }
+  .swipe-card {
+    position: absolute;
+    left: 50%; top: 0;
+    width: min(580px, calc(100vw - 48px));
+    background: var(--void-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 44px 34px;
+    box-sizing: border-box;
+    will-change: transform;
+    touch-action: none;
+    overflow: hidden;
+  }
+  .swipe-card::before {
+    content: '"';
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 160px; line-height: 1;
+    position: absolute; top: -20px; left: 20px;
+    pointer-events: none;
+    color: rgba(185,255,0,0.04);
+  }
+  .swipe-card[data-accent="m"]::before { color: rgba(255,0,170,0.04); }
+  .swipe-card[data-accent="e"]::before { color: rgba(0,212,255,0.04); }
+  .swipe-card[data-pos="1"],
+  .swipe-card[data-pos="2"] { pointer-events: none; cursor: default; }
+  .sc-quote {
+    font-size: 15px; line-height: 1.75;
+    color: rgba(240,240,245,0.82);
+    margin-bottom: 22px;
+    position: relative; z-index: 1;
+    font-style: italic;
+  }
+  .sc-quote strong { color: var(--acid); font-style: normal; font-weight: 500; }
+  .swipe-card[data-accent="m"] .sc-quote strong { color: var(--magenta); }
+  .swipe-card[data-accent="e"] .sc-quote strong { color: var(--electric); }
+  .sc-attr {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--grey);
+  }
+  .sc-attr::before { content: '◢ '; color: var(--acid); }
+  .swipe-card[data-accent="m"] .sc-attr::before { color: var(--magenta); }
+  .swipe-card[data-accent="e"] .sc-attr::before { color: var(--electric); }
+  .sc-ws {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 0.15em; color: rgba(90,90,110,0.6);
+    margin-top: 4px;
+  }
+  .swipe-label {
+    position: absolute; top: 26px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 21px; letter-spacing: -0.01em;
+    text-transform: uppercase;
+    opacity: 0; pointer-events: none; z-index: 20;
+    border: 2px solid; padding: 3px 12px; line-height: 1.4;
+    transition: opacity 0.1s;
+  }
+  .swipe-label-r { right: 24px; color: var(--acid); border-color: var(--acid); transform: rotate(10deg); }
+  .swipe-label-l { left: 24px; color: var(--magenta); border-color: var(--magenta); transform: rotate(-10deg); }
+  .swipe-footer {
+    display: flex; align-items: center; justify-content: center;
+    gap: 28px; margin-top: 18px;
+  }
+  .sw-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--void-3);
+    color: rgba(240,240,245,0.65);
+    font-size: 14px; cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+  }
+  .sw-btn.sw-prev:hover { border-color: var(--magenta); color: var(--magenta); box-shadow: 0 0 18px rgba(255,0,170,0.3); }
+  .sw-btn.sw-next:hover { border-color: var(--acid); color: var(--acid); box-shadow: 0 0 18px rgba(185,255,0,0.3); }
+  .sw-dots { display: flex; gap: 6px; align-items: center; }
+  .sw-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.3s;
+  }
+  .sw-dot.active {
+    background: var(--acid); width: 22px; border-radius: 3px;
+    box-shadow: 0 0 8px rgba(185,255,0,0.5);
+  }
+  .sw-hint {
+    text-align: center; margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 0.2em; color: rgba(90,90,110,0.45);
+  }
+
+  /* ─── ANNOUNCE CTA ─── */
+  .announce-strip {
+    background: var(--void-2);
+    border: 1px solid rgba(185,255,0,0.15);
+    padding: 52px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 40px; flex-wrap: wrap;
+  }
+  .announce-left { }
+  .announce-h {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 0.95; letter-spacing: -0.03em;
+    text-transform: uppercase; color: var(--bone);
+    margin-bottom: 10px;
+  }
+  .announce-h .a { color: var(--acid); }
+  .announce-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--grey);
+  }
+
+  @media (max-width: 900px) {
+    .next-session { grid-template-columns: 1fr; }
+    .ns-info { border-right: none; border-bottom: 1px solid rgba(185,255,0,0.15); padding: 48px 28px 36px; }
+    .ns-topics { padding: 32px 28px; }
+    .past-grid { grid-template-columns: 1fr; }
+    .swipe-stage { height: 360px; }
+    .swipe-card { padding: 32px 28px 28px; }
+    .announce-strip { flex-direction: column; padding: 36px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="logo">BIOVAGON</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">[home]</a>
+    <a href="about.html">[about]</a>
+    <div class="nav-dropdown"><a href="what-we-do.html">[services]</a><div class="nav-dropdown-menu"><a href="primerly.html">→ primerly</a></div></div>
+    <a href="workshops.html" class="active">[workshops]</a>
+    <a href="socials.html">[socials]</a>
+    <a href="contact.html" class="nav-cta">→ contact</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">menu</button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="mesh-blob"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">// learn · build · ship</div>
+    <h1>
+      WORK<span class="acc-mag">SHOPS.</span><br />
+      <span class="outline">REAL</span><br />
+      SCIENCE.
+    </h1>
+  </div>
+</div>
+
+<!-- NEXT SESSION -->
+<section>
+  <div class="container reveal">
+    <div class="section-tag">// coming up next</div>
+    <h2 class="section-h">THE NEXT<br /><span class="a">SESSION.</span></h2>
+
+    <div class="next-session">
+      <div class="ns-info">
+        <div class="ns-badge"><span class="dot"></span>REGISTRATION OPEN · 21 SEATS · CLOSES JUNE 10</div>
+        <h3 class="ns-title">SUMMER<br />INTERNSHIP<br /><span class="a">2026</span></h3>
+        <p class="ns-sub">15 days. Real learning, real project, real portfolio. From bioinformatics basics to AI in biology — build a GitHub portfolio employers actually see. No prior knowledge needed.</p>
+        <div class="ns-meta">
+          <div class="ns-meta-item">
+            <div class="ns-meta-label">Dates</div>
+            <div class="ns-meta-val">JUNE 15–29</div>
+          </div>
+          <div class="ns-meta-item">
+            <div class="ns-meta-label">Time</div>
+            <div class="ns-meta-val">1 HR DAILY</div>
+          </div>
+          <div class="ns-meta-item">
+            <div class="ns-meta-label">Mode</div>
+            <div class="ns-meta-val">ONLINE · LIVE</div>
+          </div>
+          <div class="ns-meta-item">
+            <div class="ns-meta-label">Fee</div>
+            <div class="ns-meta-val">₹1,500</div>
+          </div>
+          <div class="ns-meta-item">
+            <div class="ns-meta-label">Duration</div>
+            <div class="ns-meta-val">15 DAYS</div>
+          </div>
+          <div class="ns-meta-item">
+            <div class="ns-meta-label">Certificate</div>
+            <div class="ns-meta-val">MSME</div>
+          </div>
+        </div>
+        <div style="background: rgba(185,255,0,0.06); border: 1px solid rgba(185,255,0,0.2); padding: 16px 20px; margin-bottom: 28px;">
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:8px;">// who it's for</div>
+          <div style="font-size:14px; line-height:1.6; color:rgba(240,240,245,0.85); font-style:italic;">Students, researchers &amp; career-changers ready to genuinely learn bioinformatics from the beginning. Not for certificate collectors.</div>
+        </div>
+        <div style="font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey); margin-bottom:16px;">// what you walk away with</div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;">
+          <span style="background:rgba(185,255,0,0.08); border:1px solid rgba(185,255,0,0.25); padding:5px 12px; font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.1em; color:var(--acid);">GitHub Portfolio</span>
+          <span style="background:rgba(185,255,0,0.08); border:1px solid rgba(185,255,0,0.25); padding:5px 12px; font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.1em; color:var(--acid);">MSME Certificate</span>
+          <span style="background:rgba(185,255,0,0.08); border:1px solid rgba(185,255,0,0.25); padding:5px 12px; font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.1em; color:var(--acid);">Daily Mentor Support</span>
+          <span style="background:rgba(185,255,0,0.08); border:1px solid rgba(185,255,0,0.25); padding:5px 12px; font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.1em; color:var(--acid);">Final Presentation</span>
+        </div>
+        <div class="cta-group">
+          <a href="https://forms.gle/XbCWd9taT1TLxfWm8" target="_blank" class="btn btn-acid">→ REGISTER NOW</a>
+          <a href="socials.html" class="btn">FOLLOW FOR UPDATES</a>
+        </div>
+      </div>
+
+      <div class="ns-topics">
+        <div class="ns-topics-label">// 15 days · 3 terms</div>
+        <div class="topic-item">
+          <div class="topic-n">01</div>
+          <div>
+            <strong style="color:var(--bone);">Foundations</strong> <span style="font-size:11px; color:var(--grey);">· Days 1–5</span><br />
+            <span style="font-size:12px; color:var(--grey);">Databases · Linux · file formats · core tools · research design</span>
+          </div>
+        </div>
+        <div class="topic-item m">
+          <div class="topic-n">02</div>
+          <div>
+            <strong style="color:var(--bone);">Real NGS Analysis</strong> <span style="font-size:11px; color:var(--grey);">· Days 6–10</span><br />
+            <span style="font-size:12px; color:var(--grey);">Sequencing · QC · alignment · gene expression · full workflow</span>
+          </div>
+        </div>
+        <div class="topic-item e">
+          <div class="topic-n">03</div>
+          <div>
+            <strong style="color:var(--bone);">AI &amp; ML in Biology</strong> <span style="font-size:11px; color:var(--grey);">· Days 11–15</span><br />
+            <span style="font-size:12px; color:var(--grey);">AlphaFold · ML basics · disease prediction · final presentation</span>
+          </div>
+        </div>
+        <div style="margin-top:28px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:10px;">// included in ₹1,500</div>
+          <div style="font-size:12px; line-height:1.7; color:rgba(240,240,245,0.7);">15 live mentored sessions · session recordings (forever) · pre-vetted datasets · report &amp; README templates · daily code review · letterhead certificate · Slack + alumni network</div>
+        </div>
+        <div style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--grey); margin-bottom:10px;">// timeline</div>
+          <div style="font-family:'Space Mono',monospace; font-size:10px; color:rgba(185,255,0,0.7); line-height:1.9;">JUN 1–10 register · JUN 12 selected notified · JUN 13–14 onboarding · JUN 15–29 internship · JUN 30 certificates</div>
+        </div>
+        <a href="https://drive.google.com/file/d/1FuKDZlzwt2Nk_T6sW1u7yZOcW5WvvgH8/view?usp=sharing" target="_blank" style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:20px; padding:16px 20px; background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.25); text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='rgba(0,212,255,0.12)'" onmouseout="this.style.background='rgba(0,212,255,0.06)'">
+          <div>
+            <div style="font-family:'Bowlby One',sans-serif; font-size:14px; text-transform:uppercase; letter-spacing:-0.01em; color:var(--electric);">Full Brochure</div>
+            <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey); margin-top:3px;">// complete day-by-day breakdown · PDF</div>
+          </div>
+          <span style="font-family:'Bowlby One',sans-serif; font-size:22px; color:var(--electric); flex-shrink:0;">↓</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee mag">
+  <div class="marquee-track">
+    <span>PRIMER DESIGN</span>
+    <span>NGS ANALYSIS</span>
+    <span>BLAST ESSENTIALS</span>
+    <span>BIOINFORMATICS FOR BEGINNERS</span>
+    <span>PHD PREP</span>
+    <span>WET LAB TO DRY LAB</span>
+    <span>PRIMER DESIGN</span>
+    <span>NGS ANALYSIS</span>
+    <span>BLAST ESSENTIALS</span>
+    <span>BIOINFORMATICS FOR BEGINNERS</span>
+    <span>PHD PREP</span>
+    <span>WET LAB TO DRY LAB</span>
+  </div>
+</div>
+
+<!-- PAST WORKSHOPS -->
+<section style="background: var(--void-2); border-top: 1px solid rgba(185,255,0,0.08); border-bottom: 1px solid rgba(185,255,0,0.08);">
+  <div class="container reveal">
+    <div class="section-tag">// archive</div>
+    <h2 class="section-h">PAST<br /><span class="m">SESSIONS.</span></h2>
+
+    <div class="past-grid">
+      <div class="past-card a">
+        <div class="past-card-top">
+          <div class="past-n">01</div>
+          <div class="past-date">Session 01 · 2024</div>
+        </div>
+        <div class="past-title">Primer Design<br />Fundamentals</div>
+        <div class="past-desc">The workshop that started it all. Basics of PCR primer design, Tm calculation, and common pitfalls researchers never learn until something fails.</div>
+        <div class="past-stat">40+ attendees</div>
+      </div>
+      <div class="past-card m">
+        <div class="past-card-top">
+          <div class="past-n">02</div>
+          <div class="past-date">Session 02 · 2024</div>
+        </div>
+        <div class="past-title">Intro to<br />Bioinformatics Tools</div>
+        <div class="past-desc">A beginner-friendly tour through NCBI, BLAST, Uniprot, and the tools every wet-lab researcher should know before opening a bioinformatics pipeline.</div>
+        <div class="past-stat">35+ attendees</div>
+      </div>
+      <div class="past-card e">
+        <div class="past-card-top">
+          <div class="past-n">03</div>
+          <div class="past-date">Session 03 · 2025</div>
+        </div>
+        <div class="past-title">NGS Data Analysis<br />Basics</div>
+        <div class="past-desc">From raw FASTQ to meaningful results. Quality control, alignment, variant calling — without drowning in command-line flags you have never seen before.</div>
+        <div class="past-stat">28+ attendees</div>
+      </div>
+      <div class="past-card a">
+        <div class="past-card-top">
+          <div class="past-n">04</div>
+          <div class="past-date">Session 04 · 2025</div>
+        </div>
+        <div class="past-title">BLAST &amp; Sequence<br />Analysis Deep Dive</div>
+        <div class="past-desc">BLAST beyond copy-pasting: choosing the right algorithm, interpreting E-values, and using BLAST results in actual research context.</div>
+        <div class="past-stat">32+ attendees</div>
+      </div>
+      <div class="past-card m">
+        <div class="past-card-top">
+          <div class="past-n">05</div>
+          <div class="past-date">Session 05 · 2025</div>
+        </div>
+        <div class="past-title">PhD Application<br />Workshop</div>
+        <div class="past-desc">Lab shortlisting, SOP structure, writing samples, interview prep — everything I wish someone had told me before I applied.</div>
+        <div class="past-stat">50+ attendees</div>
+      </div>
+      <div class="past-card e">
+        <div class="past-card-top">
+          <div class="past-n">06</div>
+          <div class="past-date">Session 06 · 2026</div>
+        </div>
+        <div class="past-title">Primerly Live<br />Walkthrough</div>
+        <div class="past-desc">The official Primerly launch workshop. Live primer design from sequence to validated pair, including edge cases that trip up experienced researchers.</div>
+        <div class="past-stat">60+ attendees</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="container reveal">
+    <div class="section-tag">// what people said</div>
+    <h2 class="section-h">THE ROOM<br /><span class="e">SPOKE BACK.</span></h2>
+
+    <div class="swipe-wrap">
+      <div class="swipe-stage" id="swipeStage"></div>
+      <div class="swipe-footer">
+        <button class="sw-btn sw-prev" onclick="window.swipePrev()">←</button>
+        <div class="sw-dots" id="swipeDots"></div>
+        <button class="sw-btn sw-next" onclick="window.swipeNext()">→</button>
+      </div>
+      <div class="sw-hint">// drag to swipe · arrow keys to navigate</div>
+    </div>
+
+    <!-- ANNOUNCE CTA -->
+    <div class="announce-strip">
+      <div class="announce-left">
+        <div class="announce-h">WANT TO BE IN THE<br /><span class="a">NEXT SESSION?</span></div>
+        <div class="announce-sub">// follow us · get the announcement · show up</div>
+      </div>
+      <div class="cta-group" style="margin-top:0;">
+        <a href="contact.html" class="btn btn-acid">→ JOIN THE WAITLIST</a>
+        <a href="socials.html" class="btn btn-mag">FOLLOW UPDATES</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-mega">BIOVAGON</div>
+  <div class="footer-bottom">
+    <div>© 2026 BIOVAGON · UDYAM-TN-11-0062344 · CHENNAI</div>
+    <div class="links">
+      <a href="about.html">about</a>
+      <a href="socials.html">socials</a>
+      <a href="contact.html">contact</a>
+      <a href="https://primerly.onrender.com" target="_blank">primerly ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+<script>
+(function () {
+  var T = [
+    {
+      html: 'I had been googling how to design primers for three days. One Biovagon session, and <strong>I finally understood what I was actually doing.</strong> Not just copying numbers \u2014 understanding them.',
+      attr: 'B.SC. BIOTECHNOLOGY \u00b7 CHENNAI',
+      ws: 'primer design fundamentals \u00b7 session 01', acc: 'a'
+    },
+    {
+      html: 'Jeevitha is the kind of teacher who <strong>doesn\u2019t make you feel stupid for not knowing.</strong> I asked the same question twice and got a better explanation the second time.',
+      attr: 'M.SC. BIOINFORMATICS \u00b7 BANGALORE',
+      ws: 'intro to bioinformatics tools \u00b7 session 02', acc: 'm'
+    },
+    {
+      html: 'I used Primerly the same day as the workshop to design primers for my thesis project. <strong>It worked. First try.</strong> Two weeks of confusion, gone in two hours.',
+      attr: 'PHD STUDENT \u00b7 SRMIST CHENNAI',
+      ws: 'primerly live walkthrough \u00b7 session 06', acc: 'e'
+    },
+    {
+      html: 'The PhD application workshop was the most honest and <strong>actually useful</strong> advice I\u2019ve received. No fluff, no gatekeeping \u2014 just exactly what I needed to know.',
+      attr: 'B.TECH BIOTECHNOLOGY \u00b7 VELLORE',
+      ws: 'phd application workshop \u00b7 session 05', acc: 'a'
+    },
+    {
+      html: 'I never thought I\u2019d run an NGS pipeline from scratch on my own. After session 3, I\u2019d done it twice. <strong>The explanations were so clear it almost felt easy.</strong>',
+      attr: 'M.SC. GENOMICS \u00b7 HYDERABAD',
+      ws: 'ngs data analysis basics \u00b7 session 03', acc: 'm'
+    },
+    {
+      html: 'BLAST always felt like a black box. Now I <strong>actually know what E-values mean,</strong> which database to pick, and how to cite results properly. Night and day.',
+      attr: 'RESEARCH ASSOCIATE \u00b7 DELHI',
+      ws: 'blast & sequence analysis \u00b7 session 04', acc: 'e'
+    },
+    {
+      html: 'I joined the docking workshop knowing nothing about drug discovery. Three days in, <strong>I had visualised my own ligand-protein interaction.</strong> Genuinely surreal.',
+      attr: 'B.SC. BIOCHEMISTRY \u00b7 MUMBAI',
+      ws: 'molecular docking decoded \u00b7 session 07', acc: 'a'
+    },
+    {
+      html: 'The community alone is worth showing up for. <strong>I\u2019ve found two collaborators through Biovagon workshops.</strong> The content is great \u2014 the people are even better.',
+      attr: 'PHD CANDIDATE \u00b7 IIT MADRAS',
+      ws: 'multiple sessions \u00b7 2024\u20132025', acc: 'm'
+    }
+  ];
+
+  var cur = 0, busy = false;
+  var stage = document.getElementById('swipeStage');
+  var dotsEl = document.getElementById('swipeDots');
+
+  T.forEach(function (_, i) {
+    var d = document.createElement('div');
+    d.className = 'sw-dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(d);
+  });
+
+  function tx(pos) {
+    var yy = [0, 16, 30][pos];
+    var sc = [1, 0.97, 0.94][pos];
+    return 'translateX(-50%) translateY(' + yy + 'px) scale(' + sc + ')';
+  }
+
+  function makeCard(t, pos) {
+    var el = document.createElement('div');
+    el.className = 'swipe-card';
+    el.setAttribute('data-accent', t.acc);
+    el.setAttribute('data-pos', String(pos));
+    var op = [1, 0.88, 0.76][pos];
+    el.style.cssText = 'z-index:' + (10 - pos) + ';transform:' + tx(pos) + ';opacity:' + op + ';' + (pos > 0 ? 'pointer-events:none;cursor:default;' : 'cursor:grab;');
+    el.innerHTML =
+      (pos === 0 ? '<span class="swipe-label swipe-label-l" id="lbL">\u2190 PREV</span><span class="swipe-label swipe-label-r" id="lbR">NEXT \u2192</span>' : '') +
+      '<p class="sc-quote">\u201c' + t.html + '\u201d</p>' +
+      '<div class="sc-attr">' + t.attr + '</div>' +
+      '<div class="sc-ws">// ' + t.ws + '</div>';
+    return el;
+  }
+
+  function updateDots() {
+    dotsEl.querySelectorAll('.sw-dot').forEach(function (d, i) {
+      d.classList.toggle('active', i === cur);
+    });
+  }
+
+  function render() {
+    stage.innerHTML = '';
+    for (var i = 2; i >= 0; i--) {
+      stage.appendChild(makeCard(T[(cur + i) % T.length], i));
+    }
+    attachDrag(stage.querySelector('[data-pos="0"]'));
+    updateDots();
+  }
+
+  function advance(dir, fromCard) {
+    if (busy) return;
+    busy = true;
+    var fc = fromCard || stage.querySelector('[data-pos="0"]');
+    var mid = stage.querySelector('[data-pos="1"]');
+    var back = stage.querySelector('[data-pos="2"]');
+
+    fc.style.transition = 'transform 0.42s cubic-bezier(0.55,0,1,0.45), opacity 0.42s';
+    fc.style.transform = 'translateX(calc(-50% + ' + (dir * 920) + 'px)) translateY(-24px) rotate(' + (dir * 22) + 'deg)';
+    fc.style.opacity = '0';
+
+    if (mid) {
+      mid.style.transition = 'transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.42s';
+      mid.style.transform = tx(0); mid.style.opacity = '1'; mid.style.zIndex = '10';
+    }
+    if (back) {
+      back.style.transition = 'transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.42s';
+      back.style.transform = tx(1); back.style.opacity = '0.88';
+    }
+
+    cur = (cur + 1) % T.length;
+    updateDots();
+    setTimeout(function () { render(); busy = false; }, 440);
+  }
+
+  function attachDrag(card) {
+    var sx = 0, dragging = false, dx = 0;
+
+    card.addEventListener('pointerdown', function (e) {
+      if (busy) return;
+      sx = e.clientX; dragging = true; dx = 0;
+      card.setPointerCapture(e.pointerId);
+      card.style.transition = 'none';
+      card.style.cursor = 'grabbing';
+    });
+
+    card.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      dx = e.clientX - sx;
+      var lift = Math.min(Math.abs(dx) * 0.04, 12);
+      card.style.transform = 'translateX(calc(-50% + ' + dx + 'px)) translateY(-' + lift + 'px) rotate(' + (dx * 0.07) + 'deg)';
+      var prog = Math.min(Math.abs(dx) / 90, 1);
+      var lbR = document.getElementById('lbR');
+      var lbL = document.getElementById('lbL');
+      if (lbR && lbL) {
+        lbR.style.opacity = dx > 10 ? prog : 0;
+        lbL.style.opacity = dx < -10 ? prog : 0;
+      }
+    });
+
+    function release() {
+      if (!dragging) return;
+      dragging = false;
+      card.style.cursor = 'grab';
+      if (Math.abs(dx) > 90) {
+        advance(dx > 0 ? 1 : -1, card);
+      } else {
+        card.style.transition = 'transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)';
+        card.style.transform = tx(0);
+        var lbR = document.getElementById('lbR');
+        var lbL = document.getElementById('lbL');
+        if (lbR) lbR.style.opacity = 0;
+        if (lbL) lbL.style.opacity = 0;
+      }
+      dx = 0;
+    }
+    card.addEventListener('pointerup', release);
+    card.addEventListener('pointercancel', release);
+  }
+
+  window.swipeNext = function () { advance(1); };
+  window.swipePrev = function () {
+    if (busy) return;
+    busy = true;
+    stage.querySelectorAll('.swipe-card').forEach(function (c) {
+      c.style.transition = 'opacity 0.18s';
+      c.style.opacity = '0';
+    });
+    cur = (cur - 1 + T.length) % T.length;
+    updateDots();
+    setTimeout(function () { render(); busy = false; }, 200);
+  };
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') window.swipePrev();
+    if (e.key === 'ArrowRight') window.swipeNext();
+  });
+
+  render();
+}());
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

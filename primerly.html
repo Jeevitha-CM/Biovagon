@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+
+  <meta name="description" content="Primerly by Biovagon is a free, browser-based PCR primer design tool. No signup required. Design primers with Tm, GC%, hairpin check, and Biovagon Scoring." />
+  <meta property="og:title" content="Primerly — Free PCR Primer Design Tool" />
+  <meta property="og:description" content="Primerly by Biovagon is a free, browser-based PCR primer design tool. No signup required. Design primers with Tm, GC%, hairpin check, and Biovagon Scoring." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biovagon" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Primerly — Free PCR Primer Design Tool" />
+  <meta name="twitter:description" content="Primerly by Biovagon is a free, browser-based PCR primer design tool. No signup required. Design primers with Tm, GC%, hairpin check, and Biovagon Scoring." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIOVAGON // primerly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="shared.css" />
+<style>
+  /* ─── HERO BLOB ─── */
+  .mesh-blob {
+    position: absolute; width: 800px; height: 800px;
+    top: 50%; left: 50%; transform: translate(-20%, -50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 40%, var(--acid) 0%, transparent 45%),
+      radial-gradient(circle at 70% 60%, var(--electric) 0%, transparent 50%);
+    filter: blur(90px); opacity: 0.35;
+    animation: meshSpin 22s linear infinite; z-index: 0;
+  }
+
+  /* ─── BIG DEMO TERMINAL ─── */
+  .demo-wrap {
+    background: var(--void-2);
+    border: 1px solid rgba(185,255,0,0.3);
+    box-shadow: 0 0 80px rgba(185,255,0,0.12), inset 0 0 40px rgba(0,0,0,0.5);
+    overflow: hidden;
+    margin-bottom: 80px;
+    position: relative;
+  }
+  .demo-titlebar {
+    background: var(--void-3);
+    border-bottom: 1px solid rgba(185,255,0,0.15);
+    padding: 12px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+  }
+  .demo-titlebar .url { color: var(--acid); }
+  .demo-dots { display: flex; gap: 8px; }
+  .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .demo-dot.r { background: var(--magenta); }
+  .demo-dot.y { background: var(--acid); }
+  .demo-dot.g { background: var(--electric); }
+
+  .demo-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 420px;
+  }
+  .demo-input {
+    padding: 36px 32px;
+    border-right: 1px solid rgba(185,255,0,0.1);
+  }
+  .demo-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    margin-bottom: 10px;
+  }
+  .demo-seq {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    background: var(--void);
+    border: 1px solid rgba(185,255,0,0.2);
+    padding: 14px;
+    color: var(--acid);
+    word-break: break-all;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+  }
+  .demo-seq .nuc-A { color: var(--acid); }
+  .demo-seq .nuc-T { color: var(--magenta); }
+  .demo-seq .nuc-G { color: var(--electric); }
+  .demo-seq .nuc-C { color: var(--bone); }
+
+  .demo-params {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .param-box {
+    background: var(--void);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 12px 14px;
+  }
+  .param-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    margin-bottom: 4px;
+  }
+  .param-val {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px;
+    color: var(--bone);
+  }
+  .param-val.a { color: var(--acid); }
+  .param-val.m { color: var(--magenta); }
+  .param-val.e { color: var(--electric); }
+
+  .demo-run {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 14px 24px;
+    background: var(--acid);
+    color: var(--void);
+    border: none;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--magenta);
+    transition: all 0.15s;
+    width: 100%;
+  }
+  .demo-run:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--magenta); }
+
+  .demo-output {
+    padding: 36px 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--acid);
+    position: relative;
+    overflow: hidden;
+  }
+  .output-line { margin-bottom: 2px; }
+  .output-line .ok { color: var(--acid); }
+  .output-line .warn { color: var(--magenta); }
+  .output-line .info { color: var(--electric); }
+  .output-line .dim { color: var(--grey); }
+  .output-divider {
+    border: none; border-top: 1px solid rgba(185,255,0,0.1);
+    margin: 12px 0;
+  }
+
+  /* ─── FEATURES ─── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(185,255,0,0.1);
+    border: 1px solid rgba(185,255,0,0.1);
+    margin-bottom: 80px;
+  }
+  .feat {
+    background: var(--void-2);
+    padding: 36px 28px;
+    transition: background 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .feat::after {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+    background: var(--acid); box-shadow: 0 0 10px var(--acid);
+  }
+  .feat:nth-child(3n+2)::after { background: var(--magenta); box-shadow: 0 0 10px var(--magenta); }
+  .feat:nth-child(3n+3)::after { background: var(--electric); box-shadow: 0 0 10px var(--electric); }
+  .feat:hover { background: var(--void-3); }
+  .feat:hover::after { transform: scaleX(1); }
+  .feat-icon {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 36px;
+    color: var(--acid);
+    text-shadow: 0 0 20px rgba(185,255,0,0.4);
+    margin-bottom: 16px;
+    letter-spacing: -0.04em;
+  }
+  .feat:nth-child(3n+2) .feat-icon { color: var(--magenta); text-shadow: 0 0 20px rgba(255,0,170,0.4); }
+  .feat:nth-child(3n+3) .feat-icon { color: var(--electric); text-shadow: 0 0 20px rgba(0,212,255,0.4); }
+  .feat h4 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    margin-bottom: 10px;
+  }
+  .feat p { font-size: 13px; line-height: 1.6; color: rgba(240,240,245,0.6); }
+
+  /* ─── FREE BADGE ─── */
+  .free-banner {
+    background: var(--acid);
+    color: var(--void);
+    padding: 40px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 40px; flex-wrap: wrap;
+    box-shadow: 0 0 60px rgba(185,255,0,0.3);
+    margin-bottom: 80px;
+  }
+  .free-text {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .free-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 10px;
+    opacity: 0.7;
+  }
+  .free-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 18px 36px;
+    background: var(--void);
+    color: var(--acid);
+    border: 2px solid var(--void);
+    text-decoration: none;
+    box-shadow: 4px 4px 0 var(--magenta);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .free-cta:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--magenta); }
+
+  @media (max-width: 700px) {
+    .swipe-stage { height: 360px; }
+    .swipe-card { padding: 32px 24px 28px; }
+    /* screenshots 3-col → 1-col */
+    div[style*="grid-template-columns:repeat(3,1fr)"],
+    div[style*="grid-template-columns: repeat(3,1fr)"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+  @media (max-width: 900px) {
+    .demo-body { grid-template-columns: 1fr; }
+    .demo-output { display: none; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .free-banner { flex-direction: column; padding: 36px 28px; }
+    .demo-params { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="logo">BIOVAGON</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">[home]</a>
+    <a href="about.html">[about]</a>
+    <div class="nav-dropdown"><a href="what-we-do.html" class="active">[services]</a><div class="nav-dropdown-menu"><a href="primerly.html" class="active">→ primerly</a><a href="primer-service.html">→ primer design</a></div></div>
+    <a href="workshops.html">[workshops]</a>
+    <a href="socials.html">[socials]</a>
+    <a href="contact.html" class="nav-cta">→ contact</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">menu</button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero" style="min-height: 55vh;">
+  <div class="mesh-blob"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">// 04 / FLAGSHIP TOOL</div>
+    <h1>
+      <span class="accent">PRIMERLY.</span><br />
+      <span class="outline">PRIMER</span><br />
+      DESIGN.
+    </h1>
+  </div>
+</div>
+
+<!-- DEMO -->
+<section>
+  <div class="container reveal">
+    <div class="section-tag">// live platform · free during beta</div>
+    <h2 class="section-h">ONE TOOL.<br /><span class="a">ALL YOUR</span><br />PRIMERS.</h2>
+
+    <div class="demo-wrap">
+      <div class="demo-titlebar">
+        <div class="demo-dots">
+          <div class="demo-dot r"></div>
+          <div class="demo-dot y"></div>
+          <div class="demo-dot g"></div>
+        </div>
+        <span class="url">primerly.onrender.com</span>
+        <span>SECURE · FREE · LIVE</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-input">
+          <div class="demo-label">// input sequence</div>
+          <div class="demo-seq">
+            <span class="nuc-A">ATG</span><span class="nuc-G">GAT</span><span class="nuc-T">TTA</span><span class="nuc-T">TCT</span><span class="nuc-G">GCT</span><span class="nuc-C">CTT</span><span class="nuc-A">CGC</span><span class="nuc-G">GTT</span><span class="nuc-A">GAA</span><span class="nuc-G">GAG</span><span class="nuc-T">ATT</span><span class="nuc-C">CAG</span><span class="nuc-A">AAC</span><span class="nuc-G">CCG</span><span class="nuc-T">AGT</span><span class="nuc-A">GCC</span>
+          </div>
+
+          <div class="demo-params">
+            <div class="param-box">
+              <div class="param-label">Primer Length</div>
+              <div class="param-val a">18–22</div>
+            </div>
+            <div class="param-box">
+              <div class="param-label">Tm Range</div>
+              <div class="param-val m">55–65°C</div>
+            </div>
+            <div class="param-box">
+              <div class="param-label">GC Content</div>
+              <div class="param-val e">40–60%</div>
+            </div>
+            <div class="param-box">
+              <div class="param-label">Product Size</div>
+              <div class="param-val">200 bp</div>
+            </div>
+          </div>
+          <button class="demo-run">→ DESIGN PRIMERS</button>
+        </div>
+
+        <div class="demo-output">
+          <div class="output-line dim">// primer design complete · 0.34s</div>
+          <hr class="output-divider" />
+          <div class="output-line">&gt; FORWARD: <span class="ok">ATGGATTTA TCTGCTCTT</span></div>
+          <div class="output-line">&gt; Tm: <span class="ok">58.4°C</span> ✓</div>
+          <div class="output-line">&gt; GC: <span class="ok">44.4%</span> ✓</div>
+          <div class="output-line">&gt; hairpin: <span class="ok">LOW</span> ✓</div>
+          <hr class="output-divider" />
+          <div class="output-line">&gt; REVERSE: <span class="info">GGCACTCGG GTTTCTGAA</span></div>
+          <div class="output-line">&gt; Tm: <span class="ok">59.1°C</span> ✓</div>
+          <div class="output-line">&gt; GC: <span class="ok">55.6%</span> ✓</div>
+          <div class="output-line">&gt; hairpin: <span class="ok">LOW</span> ✓</div>
+          <hr class="output-divider" />
+          <div class="output-line">&gt; dimer score: <span class="ok">0.2 / 1.0</span> ✓</div>
+          <div class="output-line">&gt; specificity: <span class="warn">UNIQUE (BLAST confirmed)</span></div>
+          <div class="output-line">&gt; product size: <span class="ok">214 bp</span> ✓</div>
+          <hr class="output-divider" />
+          <div class="output-line ok">&gt; PAIR VALIDATED. READY TO ORDER. ✓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="section-tag">// what it does</div>
+    <h2 class="section-h" style="margin-bottom:40px;">EIGHT TOOLS<br /><span class="e">ONE PLACE.</span></h2>
+
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-icon">Tm</div>
+        <h4>Melting Temp</h4>
+        <p>Accurate Tm calculation using nearest-neighbour thermodynamics.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">GC</div>
+        <h4>GC Content</h4>
+        <p>Instant GC% with flagging for sequences outside optimal range.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">HP</div>
+        <h4>Hairpin Check</h4>
+        <p>Detect self-complementary regions that could ruin your PCR.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">DM</div>
+        <h4>Dimer Analysis</h4>
+        <p>Primer-dimer and hetero-dimer scoring for both forward and reverse.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">SP</div>
+        <h4>Specificity</h4>
+        <p>NCBI BLAST integration to confirm unique genomic binding sites.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">BV</div>
+        <h4>Biovagon Score</h4>
+        <p>Our unique confidence score — tells you exactly how good your primer pair is, based on every parameter it passes or fails.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">EX</div>
+        <h4>Export</h4>
+        <p>Download results as CSV or PDF, ready for your lab records or paper.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">FR</div>
+        <h4>Free in Beta</h4>
+        <p>Open to all during beta — no sign-up, no credits, no paywalls.</p>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div style="margin: 80px 0 0;">
+      <div class="section-tag" style="margin-bottom: 28px;">// from the platform</div>
+      <h2 class="section-h" style="margin-bottom: 40px;">SEE IT<br /><span class="m">IN ACTION.</span></h2>
+
+      <!-- Main interface — full width -->
+      <div style="margin-bottom: 2px;">
+        <div class="demo-titlebar">
+          <div class="demo-dots">
+            <div class="demo-dot r"></div>
+            <div class="demo-dot y"></div>
+            <div class="demo-dot g"></div>
+          </div>
+          <span class="url">primerly.onrender.com · design interface</span>
+          <span>INPUT YOUR SEQUENCE</span>
+        </div>
+        <div style="background:var(--void-2); border:1px solid rgba(255,255,255,0.06); border-top:none; overflow:hidden;">
+          <img src="assets/primerly/primerly-interface.png" alt="Primerly design interface" style="width:100%; display:block; opacity:0.92;" />
+        </div>
+      </div>
+
+      <!-- 3 sub-screenshots -->
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:2px;">
+
+        <div>
+          <div class="demo-titlebar" style="font-size:9px;">
+            <div class="demo-dots">
+              <div class="demo-dot r"></div>
+              <div class="demo-dot y"></div>
+              <div class="demo-dot g"></div>
+            </div>
+            <span class="url">primer results</span>
+          </div>
+          <div style="background:var(--void-2); border:1px solid rgba(255,255,255,0.06); border-top:none; overflow:hidden;">
+            <img src="assets/primerly/primer-results.png" alt="Primer pair results" style="width:100%; display:block; opacity:0.9;" />
+          </div>
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey); padding:10px 0 0; text-align:center;">// primer pair · score · properties</div>
+        </div>
+
+        <div>
+          <div class="demo-titlebar" style="font-size:9px;">
+            <div class="demo-dots">
+              <div class="demo-dot r"></div>
+              <div class="demo-dot y"></div>
+              <div class="demo-dot g"></div>
+            </div>
+            <span class="url">design results</span>
+          </div>
+          <div style="background:var(--void-2); border:1px solid rgba(255,255,255,0.06); border-top:none; overflow:hidden;">
+            <img src="assets/primerly/primer-design-results.png" alt="Design results page" style="width:100%; display:block; opacity:0.9;" />
+          </div>
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey); padding:10px 0 0; text-align:center;">// full results · sequence view · cds</div>
+        </div>
+
+        <div>
+          <div class="demo-titlebar" style="font-size:9px;">
+            <div class="demo-dots">
+              <div class="demo-dot r"></div>
+              <div class="demo-dot y"></div>
+              <div class="demo-dot g"></div>
+            </div>
+            <span class="url">learn primer design</span>
+          </div>
+          <div style="background:var(--void-2); border:1px solid rgba(255,255,255,0.06); border-top:none; overflow:hidden;">
+            <img src="assets/primerly/learn-theory.png" alt="Learn primer design theory" style="width:100%; display:block; opacity:0.9;" />
+          </div>
+          <div style="font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:var(--grey); padding:10px 0 0; text-align:center;">// built-in theory · beginner friendly</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FREE BANNER -->
+    <div class="free-banner">
+      <div>
+        <div class="free-text">FREE.<br />IN BETA.</div>
+        <div class="free-sub">// open access during beta · no account needed</div>
+      </div>
+      <a href="https://primerly.onrender.com" target="_blank" class="free-cta">→ OPEN PRIMERLY ↗</a>
+    </div>
+
+    <div class="cta-group">
+      <a href="primer-service.html" class="btn btn-mag">NEED CUSTOM PRIMERS DESIGNED FOR YOU?</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-mega">BIOVAGON</div>
+  <div class="footer-bottom">
+    <div>© 2026 BIOVAGON · UDYAM-TN-11-0062344 · CHENNAI</div>
+    <div class="links">
+      <a href="about.html">about</a>
+      <a href="socials.html">socials</a>
+      <a href="contact.html">contact</a>
+      <a href="https://primerly.onrender.com" target="_blank">primerly ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+
+  <meta name="description" content="Meet Jeevitha Chithra Madhesh — bioinformatics researcher, solo founder, and the person behind Biovagon. PhD scholar, MSME registered, Chennai." />
+  <meta property="og:title" content="About the Founder — Biovagon" />
+  <meta property="og:description" content="Meet Jeevitha Chithra Madhesh — bioinformatics researcher, solo founder, and the person behind Biovagon. PhD scholar, MSME registered, Chennai." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biovagon" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About the Founder — Biovagon" />
+  <meta name="twitter:description" content="Meet Jeevitha Chithra Madhesh — bioinformatics researcher, solo founder, and the person behind Biovagon. PhD scholar, MSME registered, Chennai." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIOVAGON // about the founder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="shared.css" />
+<script src="image-slot.js"></script>
+<style>
+  /* ─── FOUNDER INTRO GRID ─── */
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 70px;
+    align-items: start;
+    margin-bottom: 80px;
+  }
+
+  /* ─── PHOTO ─── */
+  .photo-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--void-2);
+    border: 1px solid rgba(185,255,0,0.35);
+    box-shadow: 0 0 80px rgba(185,255,0,0.12), 0 0 200px rgba(185,255,0,0.06);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-frame::after {
+    content: '';
+    position: absolute; inset: 0;
+    border: 1px solid rgba(185,255,0,0.1);
+    pointer-events: none;
+  }
+  .photo-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    background: repeating-linear-gradient(45deg, rgba(185,255,0,0.02) 0px, rgba(185,255,0,0.02) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(-45deg, rgba(185,255,0,0.02) 0px, rgba(185,255,0,0.02) 1px, transparent 1px, transparent 20px);
+    inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  }
+  .photo-placeholder .ph-big { font-family: 'Bowlby One', sans-serif; font-size: 60px; color: rgba(185,255,0,0.1); }
+  .corner { position: absolute; width: 22px; height: 22px; border: 2px solid var(--acid); }
+  .corner.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+  .corner.br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+  .photo-meta {
+    margin-top: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    display: flex; justify-content: space-between;
+  }
+  .photo-meta span { color: var(--acid); }
+
+  /* ─── BIO ─── */
+  .founder-name {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(52px, 6.5vw, 88px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--bone);
+    margin-bottom: 10px;
+  }
+  .founder-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    margin-bottom: 36px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .founder-title::before { content: '◢'; }
+  .bio-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(240,240,245,0.8);
+    margin-bottom: 22px;
+  }
+  .bio-text strong { color: var(--acid); font-weight: 500; }
+  .bio-text .m { color: var(--magenta); }
+  .bio-text .e { color: var(--electric); }
+
+  /* ─── STAT STRIP ─── */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(185,255,0,0.12);
+    border: 1px solid rgba(185,255,0,0.12);
+    margin: 60px 0;
+  }
+  .stat-box {
+    background: var(--void-2);
+    padding: 32px 20px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .stat-box:hover { background: var(--void-3); }
+  .stat-num {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--acid);
+    text-shadow: 0 0 30px rgba(185,255,0,0.4);
+    margin-bottom: 6px;
+  }
+  .stat-box.m .stat-num { color: var(--magenta); text-shadow: 0 0 30px rgba(255,0,170,0.4); }
+  .stat-box.e .stat-num { color: var(--electric); text-shadow: 0 0 30px rgba(0,212,255,0.4); }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    line-height: 1.5;
+  }
+
+  /* ─── SECTION BLOCKS ─── */
+  .content-sections { display: flex; flex-direction: column; gap: 1px; background: rgba(185,255,0,0.08); border: 1px solid rgba(185,255,0,0.08); margin-bottom: 80px; }
+  .content-block {
+    background: var(--void-2);
+    padding: 52px 56px;
+    position: relative; overflow: hidden;
+    transition: background 0.2s;
+  }
+  .content-block:hover { background: var(--void-3); }
+  .content-block::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--acid);
+    box-shadow: 0 0 12px rgba(185,255,0,0.4);
+  }
+  .content-block.m::before { background: var(--magenta); box-shadow: 0 0 12px rgba(255,0,170,0.4); }
+  .content-block.e::before { background: var(--electric); box-shadow: 0 0 12px rgba(0,212,255,0.4); }
+
+  .block-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .content-block.m .block-label { color: var(--magenta); }
+  .content-block.e .block-label { color: var(--electric); }
+  .block-label::before { content: '↳'; }
+
+  .block-h {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--bone);
+    margin-bottom: 24px;
+  }
+  .block-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(240,240,245,0.78);
+  }
+  .block-body p { margin-bottom: 18px; }
+  .block-body p:last-child { margin-bottom: 0; }
+  .block-body strong { color: var(--bone); font-weight: 500; }
+  .block-body .a { color: var(--acid); }
+  .block-body .m { color: var(--magenta); }
+  .block-body .e { color: var(--electric); }
+
+  /* ─── ROLES GRID ─── */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(185,255,0,0.1);
+    border: 1px solid rgba(185,255,0,0.1);
+    margin: 28px 0;
+  }
+  .role-item {
+    background: var(--void);
+    padding: 22px 24px;
+    transition: background 0.2s;
+  }
+  .role-item:hover { background: var(--void-2); }
+  .role-title {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--acid);
+    margin-bottom: 6px;
+  }
+  .role-item.m .role-title { color: var(--magenta); }
+  .role-item.e .role-title { color: var(--electric); }
+  .role-item.b .role-title { color: var(--bone); }
+  .role-desc {
+    font-size: 13px;
+    color: rgba(240,240,245,0.6);
+    line-height: 1.5;
+  }
+
+  /* ─── PUBLICATIONS ─── */
+  .pub-list { display: flex; flex-direction: column; gap: 1px; background: rgba(185,255,0,0.1); border: 1px solid rgba(185,255,0,0.1); }
+  .pub-item {
+    background: var(--void-2);
+    padding: 28px 36px;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 28px;
+    align-items: center;
+    transition: background 0.2s;
+  }
+  .pub-item:hover { background: var(--void-3); }
+  .pub-n {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 40px;
+    color: var(--acid);
+    text-shadow: 0 0 20px rgba(185,255,0,0.4);
+    line-height: 1;
+  }
+  .pub-item:nth-child(2) .pub-n { color: var(--magenta); text-shadow: 0 0 20px rgba(255,0,170,0.4); }
+  .pub-item:nth-child(3) .pub-n { color: var(--electric); text-shadow: 0 0 20px rgba(0,212,255,0.4); }
+  .pub-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; line-height: 1.4; color: var(--bone); }
+  .pub-area {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+  }
+  .pub-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    border: 1px solid rgba(185,255,0,0.3);
+    color: var(--acid);
+    white-space: nowrap;
+  }
+
+  /* ─── STUDENT SECTION ─── */
+  .student-block {
+    background: var(--void-3);
+    border: 1px solid rgba(185,255,0,0.2);
+    padding: 64px 60px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 80px;
+  }
+  .student-block::after {
+    content: '';
+    position: absolute;
+    top: 50%; right: -100px; transform: translateY(-50%);
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(185,255,0,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .student-h {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--bone);
+    margin-bottom: 28px;
+  }
+  .student-h .a { color: var(--acid); }
+  .student-body {
+    font-size: 16px; line-height: 1.8;
+    color: rgba(240,240,245,0.78);
+    max-width: 780px; position: relative; z-index: 1;
+  }
+  .student-body p { margin-bottom: 18px; }
+  .student-body strong { color: var(--bone); font-weight: 500; }
+  .student-body .a { color: var(--acid); }
+  .dm-list {
+    margin: 24px 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .dm-list li {
+    list-style: none;
+    font-size: 15px;
+    color: rgba(240,240,245,0.75);
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .dm-list li::before { content: '◢'; color: var(--acid); font-size: 8px; margin-top: 6px; flex-shrink: 0; }
+
+  /* ─── ONLINE LINKS ─── */
+  .online-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(185,255,0,0.1);
+    border: 1px solid rgba(185,255,0,0.1);
+    margin-bottom: 60px;
+  }
+  .online-card {
+    background: var(--void-2);
+    padding: 40px 44px;
+    text-decoration: none; color: var(--bone);
+    display: flex; align-items: center; gap: 28px;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .online-card::before {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 100%; height: 2px;
+    transition: left 0.5s;
+  }
+  .online-card.a::before { background: linear-gradient(90deg, transparent, var(--acid), transparent); }
+  .online-card.m::before { background: linear-gradient(90deg, transparent, var(--magenta), transparent); }
+  .online-card:hover { background: var(--void-3); }
+  .online-card:hover::before { left: 100%; }
+  .online-icon {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    flex-shrink: 0;
+  }
+  .online-card.a .online-icon { color: var(--acid); text-shadow: 0 0 20px rgba(185,255,0,0.4); }
+  .online-card.m .online-icon { color: var(--magenta); text-shadow: 0 0 20px rgba(255,0,170,0.4); }
+  .online-info { flex: 1; }
+  .online-platform {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    margin-bottom: 4px;
+    transition: color 0.2s;
+  }
+  .online-card.a:hover .online-platform { color: var(--acid); }
+  .online-card.m:hover .online-platform { color: var(--magenta); }
+  .online-handle {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+    margin-bottom: 8px;
+  }
+  .online-desc { font-size: 13px; line-height: 1.5; color: rgba(240,240,245,0.55); }
+  .online-arrow {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 28px;
+    color: rgba(255,255,255,0.12);
+    transition: all 0.2s;
+  }
+  .online-card:hover .online-arrow { color: var(--bone); transform: translateX(5px); }
+
+  /* ─── SIGN OFF ─── */
+  .signoff {
+    text-align: center;
+    padding: 60px 0 20px;
+  }
+  .signoff-text {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: clamp(24px, 3.5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--bone);
+    margin-bottom: 16px;
+  }
+  .signoff-text .a { color: var(--acid); }
+  .signoff-attr {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+  }
+  .signoff-attr span { color: var(--acid); }
+
+  /* ─── MESH ─── */
+  .mesh-blob {
+    position: absolute;
+    width: 600px; height: 600px;
+    top: 20%; right: -200px; border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, var(--acid) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, var(--electric) 0%, transparent 50%);
+    filter: blur(80px); opacity: 0.35;
+    animation: meshSpin 25s linear infinite; z-index: 0;
+  }
+
+  @media (max-width: 900px) {
+    .founder-grid { grid-template-columns: 1fr; gap: 40px; }
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+    /* compact social links → stack on mobile */
+    div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    .content-block { padding: 40px 32px; }
+    .roles-grid { grid-template-columns: 1fr; }
+    .pub-item { grid-template-columns: 48px 1fr; }
+    .pub-badge { display: none; }
+    .student-block { padding: 44px 32px; }
+    .online-grid { grid-template-columns: 1fr; }
+    .online-card { padding: 32px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="logo">BIOVAGON</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">[home]</a>
+    <a href="about.html" class="active">[about]</a>
+    <div class="nav-dropdown"><a href="what-we-do.html">[services]</a><div class="nav-dropdown-menu"><a href="primerly.html">→ primerly</a></div></div>
+    <a href="workshops.html">[workshops]</a>
+    <a href="socials.html">[socials]</a>
+    <a href="contact.html" class="nav-cta">→ contact</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">menu</button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="mesh-blob"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">// 01 / FOUNDER</div>
+    <h1>
+      <span class="glitch" data-text="I'M">I'M</span><br />
+      <span class="accent">JEEVITHA.</span><br />
+      <span class="outline">I RUN</span><br />
+      BIOVAGON.
+    </h1>
+  </div>
+</div>
+
+<!-- FOUNDER INTRO -->
+<section>
+  <div class="container reveal">
+    <div class="founder-grid">
+
+      <!-- PHOTO -->
+      <div>
+        <div class="photo-frame">
+          <img
+            src="imgs/founder-portrait.webp"
+            alt="Jeevitha — Founder, Biovagon"
+            style="width:100%; height:100%; display:block; object-fit:cover;"
+          />
+          <span class="corner tl"></span>
+          <span class="corner tr"></span>
+          <span class="corner bl"></span>
+          <span class="corner br"></span>
+        </div>
+        <div class="photo-meta">
+          <span>JEEVITHA · FOUNDER</span>
+          <span style="color:var(--acid);">CHENNAI · 2026</span>
+        </div>
+      </div>
+
+      <!-- BIO -->
+      <div>
+        <h2 class="founder-name">JEEVITHA<br /><span style="color:var(--acid);">CHITHRA MADHESH.</span></h2>
+        <div class="founder-title">FOUNDER · BIOVAGON · PHD SCHOLAR</div>
+        <p class="bio-text"><strong>Bioinformatics is my first love</strong> — the pull of turning biological complexity into something you can see, understand, and act on has never faded. I stopped waiting for someone else to build what life sciences actually needed, and built it myself, from one laptop in Chennai. That is how Biovagon came to exist.</p>
+        <p class="bio-text">This company is fully, completely mine — which is exactly why I refuse to let it be anything less than <span class="m">genuinely useful.</span> Every budding scientist in life sciences deserves a space that is helpful, meaningful, and built by someone who has sat in the same seat they are in right now.</p>
+
+        <!-- COMPACT SOCIAL LINKS -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(185,255,0,0.1); border:1px solid rgba(185,255,0,0.1); margin-top:32px;">
+          <a href="https://linkedin.com/in/jeevithacm21" target="_blank" class="online-card a" style="padding:20px 24px; gap:14px;">
+            <div class="online-icon" style="font-size:28px;">LI</div>
+            <div class="online-info">
+              <div class="online-platform" style="font-size:17px;">LinkedIn</div>
+              <div class="online-handle" style="font-size:10px;">jeevithacm21</div>
+            </div>
+            <div class="online-arrow" style="font-size:18px;">→</div>
+          </a>
+          <a href="https://medium.com/@jeevithacm21" target="_blank" class="online-card m" style="padding:20px 24px; gap:14px;">
+            <div class="online-icon" style="font-size:28px;">M</div>
+            <div class="online-info">
+              <div class="online-platform" style="font-size:17px;">Medium</div>
+              <div class="online-handle" style="font-size:10px;">@jeevithacm21</div>
+            </div>
+            <div class="online-arrow" style="font-size:18px;">→</div>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT BLOCKS -->
+<section style="background: var(--void-2); border-top: 1px solid rgba(185,255,0,0.1); border-bottom: 1px solid rgba(185,255,0,0.1);">
+  <div class="container reveal">
+
+    <div class="content-sections">
+
+      <!-- WHERE BIOVAGON CAME FROM -->
+      <div class="content-block">
+        <div class="block-label">Where Biovagon came from</div>
+        <h3 class="block-h">NOT A PITCH DECK.<br />A FEELING.</h3>
+        <div class="block-body">
+          <p>Biovagon was not a pitch deck before it was a company. It was a feeling.</p>
+          <p>I kept watching scientists at every level — including myself — lose entire afternoons to bioinformatics workflows that should have taken thirty minutes. Five tabs, six logins, exported CSVs nobody could parse, and the constant refrain of <span class="a">"we should build a pipeline for that, someday."</span> I got tired of waiting for someday. So I started building. That was 2024. It has not slowed down since.</p>
+          <p>The name came during my MTech. It stuck because it sounded like what I wanted the company to be: <strong>a small thing with everything important loaded inside, going somewhere on purpose.</strong></p>
+        </div>
+      </div>
+
+      <!-- HOW THE COMPANY RUNS -->
+      <div class="content-block m">
+        <div class="block-label">How the company actually runs</div>
+        <h3 class="block-h">ONE BRAIN,<br />FOUR JOBS.</h3>
+        <div class="block-body">
+          <p>Biovagon and the PhD are not separate jobs. They share a brain. Most of what is on the roadmap started as a problem in my own research. <span class="m">If a tool cannot survive my own bench, it does not ship to anyone else's.</span></p>
+          <p>Right now the company is one person doing the work of about four:</p>
+          <div class="roles-grid">
+            <div class="role-item">
+              <div class="role-title">CEO Work</div>
+              <div class="role-desc">Product direction, pricing, brand, and operations.</div>
+            </div>
+            <div class="role-item m">
+              <div class="role-title">Founder Work</div>
+              <div class="role-desc">Specs, code review, and shipping.</div>
+            </div>
+            <div class="role-item e">
+              <div class="role-title">Public-Facing Work</div>
+              <div class="role-desc">Writing, community, and long-form thinking.</div>
+            </div>
+            <div class="role-item b">
+              <div class="role-title">The PhD Work</div>
+              <div class="role-desc">The actual science that keeps all of it honest.</div>
+            </div>
+          </div>
+          <p>This stack is intentional, not a flex. It keeps the feedback loop tight. When something is broken, I find out within a day, because I am the one using it.</p>
+        </div>
+      </div>
+
+      <!-- WHAT IS LIVE -->
+      <div class="content-block e">
+        <div class="block-label">What is live, what is next</div>
+        <h3 class="block-h">SHIPPING ONLY<br />WHEN IT'S READY.</h3>
+        <div class="block-body">
+          <p><span class="e">Primerly</span> is the flagship. Free integrated primer design, in your browser, no signup wall. The custom primer service is its paid counterpart for teams who would rather send a brief and get primers back than learn another platform.</p>
+          <p>A few more tools are already in the build queue. I am not naming them yet. They will show up here when they are ready to survive a real bench, and not a day before. <strong>One of them is going to make a lot of people in this field very happy, and a few people very nervous.</strong></p>
+          <p>Biovagon will scale beyond a single founder eventually. That is the plan. But only when the foundation is the kind I would be willing to hand off without rewriting it first.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- STUDENT SECTION -->
+<section style="background: var(--void-2); border-top: 1px solid rgba(185,255,0,0.1); border-bottom: 1px solid rgba(185,255,0,0.1); padding-top: 80px; padding-bottom: 80px;">
+  <div class="container reveal">
+    <div class="section-tag">// if you are a student reading this</div>
+    <div class="student-block">
+      <h3 class="student-h">I SEE YOU.<br />I WAS <span class="a">YOU</span><br />NOT LONG AGO.</h3>
+      <div class="student-body">
+        <p>If you are doing your UG or PG in life sciences and the field feels gatekept, expensive, or built for people with richer labs and better connections — <strong>you are not imagining it. It is.</strong> But it is also more breakable than it looks. I am out here breaking my piece of it from one laptop in Chennai, with a PhD to finish on the side. You can break your piece of it too.</p>
+        <p>If you are sitting on a biotech idea and the loudest voice in your head is <span class="a">"who am I to start a company"</span> — that voice is wrong, very normal, and entirely temporary. I have not solved it either. I have just learned to ship anyway.</p>
+        <p>My DMs are open and I actually answer them. Not "we will get back to you in 5–7 business days" — I mean me, typing back. So if you want to ask about:</p>
+        <ul class="dm-list">
+          <li>Breaking into bioinformatics from a wet-lab background</li>
+          <li>Whether to do a PhD, where to do one, and how to survive it</li>
+          <li>Starting a one-person biotech without funding</li>
+          <li>Which tools to learn first and which to ignore</li>
+          <li>Or you just want someone working in the field to look at your CV</li>
+        </ul>
+        <p><strong>Message me. The worst that happens is I reply.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN BIOVAGON CTA -->
+<section style="background: var(--void-2); border-top: 1px solid rgba(185,255,0,0.1); border-bottom: 1px solid rgba(185,255,0,0.1);">
+  <div class="container reveal">
+    <div style="
+      background: var(--void-3);
+      border: 1px solid rgba(185,255,0,0.25);
+      box-shadow: 0 0 80px rgba(185,255,0,0.08);
+      padding: 60px 56px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 40px; flex-wrap: wrap;
+      position: relative; overflow: hidden;
+    ">
+      <!-- bg glow -->
+      <div style="
+        position: absolute; top: 50%; right: -60px; transform: translateY(-50%);
+        width: 320px; height: 320px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(185,255,0,0.07) 0%, transparent 70%);
+        pointer-events: none;
+      "></div>
+
+      <div style="position: relative; z-index: 1;">
+        <div class="section-tag" style="margin-bottom: 20px;">// be part of biovagon</div>
+        <h2 style="
+          font-family: 'Bowlby One', sans-serif;
+          font-size: clamp(28px, 4vw, 52px);
+          line-height: 0.95; letter-spacing: -0.03em;
+          text-transform: uppercase; color: var(--bone);
+          margin-bottom: 14px;
+        ">WANT TO BE PART<br />OF <span style="color:var(--acid);">BIOVAGON?</span></h2>
+        <p style="
+          font-family: 'Space Mono', monospace;
+          font-size: 12px; text-transform: uppercase;
+          letter-spacing: 0.15em; color: var(--grey);
+          max-width: 460px; line-height: 1.7;
+        ">Whether you're a student, researcher, or just someone who loves life sciences — my WhatsApp is open. Message me directly and let's talk.</p>
+      </div>
+
+      <div style="position: relative; z-index: 1; flex-shrink: 0;">
+        <a
+          href="https://wa.me/919488992423?text=Hi%20Jeevitha!%20I%27d%20love%20to%20be%20a%20part%20of%20Biovagon."
+          target="_blank"
+          class="btn btn-acid"
+          style="font-size: 14px; padding: 20px 32px; gap: 14px;"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          MESSAGE ON WHATSAPP
+        </a>
+        <div style="font-family: 'Space Mono', monospace;
+          font-size: 9px; text-transform: uppercase;
+          letter-spacing: 0.15em; color: var(--grey);
+          text-align: center; margin-top: 12px;
+        ">// tap to open a chat</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGN OFF -->
+<section>
+  <div class="container reveal">
+    <!-- SIGN OFF -->
+    <div class="signoff">
+      <div class="signoff-text">
+        FROM THE OTHER<br />SIDE OF THE <span class="a">SCREEN.</span>
+      </div>
+      <div class="signoff-attr">— J. · <span>JEEVITHA · FOUNDER, BIOVAGON · CHENNAI 2026</span></div>
+    </div>
+
+    <div class="cta-group" style="justify-content:center;">
+      <a href="contact.html" class="btn btn-acid">→ GET IN TOUCH</a>
+      <a href="what-we-do.html" class="btn btn-mag">SEE WHAT WE DO</a>
+      <a href="https://linkedin.com/in/jeevithacm21" target="_blank" class="btn">LINKEDIN ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-mega">BIOVAGON</div>
+  <div class="footer-bottom">
+    <div>© 2026 BIOVAGON · UDYAM-TN-11-0062344 · CHENNAI</div>
+    <div class="links">
+      <a href="about.html">about</a>
+      <a href="socials.html">socials</a>
+      <a href="contact.html">contact</a>
+      <a href="https://primerly.onrender.com" target="_blank">primerly ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

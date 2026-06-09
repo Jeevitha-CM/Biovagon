@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+
+  <meta name="description" content="Custom, validated primer pairs designed by Biovagon. Powered by Primerly. Delivered in 24–48h with full documentation and Biovagon Scoring." />
+  <meta property="og:title" content="Custom Primer Design Service — Biovagon" />
+  <meta property="og:description" content="Custom, validated primer pairs designed by Biovagon. Powered by Primerly. Delivered in 24–48h with full documentation and Biovagon Scoring." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Biovagon" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Custom Primer Design Service — Biovagon" />
+  <meta name="twitter:description" content="Custom, validated primer pairs designed by Biovagon. Powered by Primerly. Delivered in 24–48h with full documentation and Biovagon Scoring." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIOVAGON // primer design service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="shared.css" />
+<style>
+  .mesh-blob {
+    position: absolute; width: 600px; height: 600px;
+    top: 40%; left: -150px; border-radius: 50%;
+    background:
+      radial-gradient(circle at 60% 40%, var(--magenta) 0%, transparent 50%),
+      radial-gradient(circle at 40% 70%, var(--acid) 0%, transparent 55%);
+    filter: blur(80px); opacity: 0.35;
+    animation: meshSpin 26s linear infinite reverse; z-index: 0;
+  }
+
+  /* ─── PRICING TIERS ─── */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(185,255,0,0.12);
+    border: 1px solid rgba(185,255,0,0.12);
+    margin-bottom: 80px;
+  }
+  .tier {
+    background: var(--void-2);
+    padding: 48px 36px;
+    position: relative;
+    transition: background 0.3s;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .tier:hover { background: var(--void-3); }
+  .tier.featured {
+    background: var(--void-3);
+    border: 2px solid var(--acid);
+    margin: -1px;
+    box-shadow: 0 0 60px rgba(185,255,0,0.2);
+    z-index: 1;
+  }
+  .tier.featured-m {
+    background: var(--void-3);
+    border: 2px solid var(--magenta);
+    margin: -1px;
+    box-shadow: 0 0 60px rgba(255,0,170,0.2);
+    z-index: 1;
+  }
+  .tier-badge {
+    position: absolute; top: 0; right: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 6px 14px;
+    background: var(--acid); color: var(--void);
+    font-weight: 700;
+  }
+  .tier-badge.m { background: var(--magenta); color: var(--bone); }
+
+  .tier-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    margin-bottom: 16px;
+  }
+  .tier-price {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 56px;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--bone);
+    margin-bottom: 4px;
+  }
+  .tier.featured .tier-price { color: var(--acid); text-shadow: 0 0 30px rgba(185,255,0,0.4); }
+  .tier.featured-m .tier-price { color: var(--magenta); text-shadow: 0 0 30px rgba(255,0,170,0.4); }
+  .tier-unit {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    margin-bottom: 32px;
+  }
+  .tier-features {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 32px;
+  }
+  .tier-features li {
+    font-size: 14px;
+    color: rgba(240,240,245,0.75);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 10px;
+    line-height: 1.4;
+  }
+  .tier-features li::before { content: '◢'; color: var(--acid); font-size: 8px; flex-shrink: 0; }
+  .tier.featured-m .tier-features li::before { color: var(--magenta); }
+  .tier-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: all 0.15s;
+    border: 1px solid rgba(185,255,0,0.4);
+    color: var(--acid);
+  }
+  .tier-cta:hover { background: var(--acid); color: var(--void); box-shadow: 4px 4px 0 var(--magenta); transform: translate(-2px,-2px); }
+  .tier.featured .tier-cta, .tier.featured-m .tier-cta {
+    background: var(--acid); color: var(--void);
+    border-color: var(--acid);
+    box-shadow: 4px 4px 0 var(--magenta);
+  }
+  .tier.featured-m .tier-cta { background: var(--magenta); border-color: var(--magenta); box-shadow: 4px 4px 0 var(--electric); }
+  .tier.featured .tier-cta:hover, .tier.featured-m .tier-cta:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 var(--magenta);
+  }
+
+  /* ─── WHAT YOU GET ─── */
+  .deliverables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 80px;
+  }
+  .deliverable {
+    background: var(--void-2);
+    padding: 36px 32px;
+    display: flex; align-items: flex-start; gap: 24px;
+    transition: background 0.2s;
+  }
+  .deliverable:hover { background: var(--void-3); }
+  .deliv-n {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    color: rgba(185,255,0,0.15);
+    transition: all 0.3s;
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+  .deliverable:hover .deliv-n { color: var(--acid); text-shadow: 0 0 20px rgba(185,255,0,0.4); }
+  .deliv-body h4 {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    margin-bottom: 8px;
+  }
+  .deliv-body p { font-size: 14px; line-height: 1.6; color: rgba(240,240,245,0.65); }
+
+  /* ─── FAQ ─── */
+  .faq-list { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); }
+  .faq-item {
+    background: var(--void-2);
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .faq-item:hover { background: var(--void-3); }
+  .faq-q {
+    padding: 24px 32px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--bone);
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 20px;
+    user-select: none;
+  }
+  .faq-q::after {
+    content: '+';
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 24px;
+    color: var(--acid);
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(240,240,245,0.7);
+    padding: 0 32px;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 32px 24px; }
+
+  @media (max-width: 900px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .tier.featured, .tier.featured-m { margin: 0; }
+    .deliverables { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="logo">BIOVAGON</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">[home]</a>
+    <a href="about.html">[about]</a>
+    <div class="nav-dropdown"><a href="what-we-do.html">[services]</a><div class="nav-dropdown-menu"><a href="primerly.html">→ primerly</a></div></div>
+    <a href="workshops.html">[workshops]</a>
+    <a href="socials.html">[socials]</a>
+    <a href="contact.html" class="nav-cta">→ contact</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">menu</button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="mesh-blob"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">// 05 / SERVICE</div>
+    <h1>
+      PRIMER<br />
+      <span class="acc-mag">DESIGN</span><br />
+      SERVICE.
+    </h1>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section>
+  <div class="container reveal">
+    <div class="section-tag">// done-for-you</div>
+    <h2 class="section-h">WE DESIGN.<br />YOU <span class="a">ORDER.</span></h2>
+    <p style="font-size:18px; line-height:1.7; color:rgba(240,240,245,0.75); max-width:700px; margin-bottom:60px;">
+      Not everyone wants to learn primer design — and that's fine. Send us your sequence, your application, your timeline. We handle the rest: design, validation, documentation, ready to hand to your synthesis provider.
+    </p>
+
+    <!-- TIERS -->
+    <div class="section-tag mag">// pricing</div>
+    <h2 class="section-h" style="margin-bottom:40px;">BUILT FOR<br /><span class="m">YOUR SCOPE.</span></h2>
+
+    <div class="tier-grid">
+      <div class="tier">
+        <div class="tier-name">// BASIC</div>
+        <div class="tier-price" style="font-size:32px; margin-bottom:8px; letter-spacing:-0.01em;">CONTACT US</div>
+        <div class="tier-unit">per primer pair</div>
+        <ul class="tier-features">
+          <li>1 primer pair design</li>
+          <li>Tm &amp; GC validation</li>
+          <li>Hairpin &amp; dimer check</li>
+          <li>48h turnaround</li>
+          <li>Results PDF</li>
+        </ul>
+        <a href="contact.html" class="tier-cta">→ GET A QUOTE</a>
+      </div>
+
+      <div class="tier featured">
+        <div class="tier-badge">MOST POPULAR</div>
+        <div class="tier-name">// STANDARD</div>
+        <div class="tier-price" style="font-size:32px; margin-bottom:8px; letter-spacing:-0.01em;">CONTACT US</div>
+        <div class="tier-unit">multiple primer pairs</div>
+        <ul class="tier-features">
+          <li>Multiple primer pairs</li>
+          <li>Full validation suite</li>
+          <li>BLAST specificity check</li>
+          <li>Alternative candidates</li>
+          <li>24h turnaround</li>
+          <li>Annotated PDF report</li>
+          <li>1 round of revisions</li>
+        </ul>
+        <a href="contact.html" class="tier-cta">→ GET A QUOTE</a>
+      </div>
+
+      <div class="tier featured-m">
+        <div class="tier-badge m">PERSONALISED</div>
+        <div class="tier-name">// PREMIUM</div>
+        <div class="tier-price" style="font-size:32px; margin-bottom:8px; letter-spacing:-0.01em;">CONTACT US</div>
+        <div class="tier-unit">tailored to your project</div>
+        <ul class="tier-features">
+          <li>Scoped to your exact needs</li>
+          <li>Full validation suite</li>
+          <li>BLAST + in-silico PCR</li>
+          <li>Wet lab-ready protocol</li>
+          <li>Priority turnaround</li>
+          <li>Full documented report</li>
+          <li>Revisions as discussed</li>
+          <li>30-min consultation call</li>
+        </ul>
+        <a href="contact.html" class="tier-cta">→ GET A QUOTE</a>
+      </div>
+    </div>
+
+    <!-- WHAT YOU GET -->
+    <div class="section-tag">// deliverables</div>
+    <h2 class="section-h" style="margin-bottom:40px;">WHAT YOU<br /><span class="e">RECEIVE.</span></h2>
+
+    <div class="deliverables">
+      <div class="deliverable">
+        <div class="deliv-n">01</div>
+        <div class="deliv-body">
+          <h4>Validated Primer Sequences</h4>
+          <p>Forward and reverse sequences with all parameters confirmed — Tm, GC%, hairpin risk, dimer score.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliv-n" style="color:rgba(255,0,170,0.15);">02</div>
+        <div class="deliv-body">
+          <h4>Annotated PDF Report</h4>
+          <p>A clean, submission-ready document covering methodology, results, and ordering recommendations.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliv-n" style="color:rgba(0,212,255,0.15);">03</div>
+        <div class="deliv-body">
+          <h4>BLAST Evidence</h4>
+          <p>NCBI BLAST results confirming unique binding — no off-target hits, confidence for publication.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliv-n">04</div>
+        <div class="deliv-body">
+          <h4>Ordering-Ready Format</h4>
+          <p>Sequences formatted exactly as your synthesis provider requires. Ready to paste and submit.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-tag">// questions</div>
+    <h2 class="section-h" style="margin-bottom:40px;">FAQ.</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">What do I need to send you?</div>
+        <div class="faq-a">Your target sequence (FASTA or plain text), the organism, the application (qPCR, conventional PCR, cloning, etc.), and any constraints on product size or primer location. That's it.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How quickly will I get results?</div>
+        <div class="faq-a">Basic: 48h. Standard: 24h. Premium: 12h. These are maximum turnarounds — most orders are delivered faster.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if the primers don't work in the lab?</div>
+        <div class="faq-a">We'll redesign at no charge if the primers fail under the exact conditions described at order time. Wet lab variables outside our control (sample quality, reagent issues) are excluded, but we'll still help you troubleshoot.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you do multiplex or degenerate primers?</div>
+        <div class="faq-a">Yes — contact us before ordering to discuss. Multiplex and degenerate designs are handled under the Premium tier or as custom quotes.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I use this for my thesis or publication?</div>
+        <div class="faq-a">Absolutely. Our reports are formatted for citation and include all the information reviewers typically ask for — sequences, Tm, GC%, BLAST accession numbers.</div>
+      </div>
+    </div>
+
+    <div class="cta-group" style="margin-top:60px;">
+      <a href="contact.html" class="btn btn-acid">→ PLACE AN ORDER</a>
+      <a href="primerly.html" class="btn">TRY PRIMERLY FREE FIRST</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-mega">BIOVAGON</div>
+  <div class="footer-bottom">
+    <div>© 2026 BIOVAGON · UDYAM-TN-11-0062344 · CHENNAI</div>
+    <div class="links">
+      <a href="about.html">about</a>
+      <a href="socials.html">socials</a>
+      <a href="contact.html">contact</a>
+      <a href="https://primerly.onrender.com" target="_blank">primerly ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+<script src="shared.js"></script>
+</body>
+</html>
